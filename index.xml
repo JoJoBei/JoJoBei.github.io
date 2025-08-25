@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>JoWhite</title>
-        <link>http://localhost:1313/</link>
+        <link>https://jojobei.github.io/</link>
         <description>Recent content on JoWhite</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>Jowhite</copyright>
-        <lastBuildDate>Fri, 30 May 2025 13:46:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 30 May 2025 13:46:56 +0000</lastBuildDate><atom:link href="https://jojobei.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>HTB-Flight-Writeup</title>
-        <link>http://localhost:1313/htb-flight-Writeup/</link>
+        <link>https://jojobei.github.io/htb-flight-Writeup/</link>
         <pubDate>Fri, 30 May 2025 13:46:56 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-flight-Writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" alt="Featured image of post HTB-Flight-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
+        <guid>https://jojobei.github.io/htb-flight-Writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" alt="Featured image of post HTB-Flight-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
   &lt;figure class=&#34;aligncenter size-full&#34;&gt;&lt;img loading=&#34;lazy&#34; decoding=&#34;async&#34; width=&#34;300&#34; height=&#34;300&#34; src=&#34;../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e.webp&#34; alt=&#34;&#34; class=&#34;wp-image-1483&#34; srcset=&#34;../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e.webp 300w, ../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp 150w&#34; sizes=&#34;auto, (max-width: 300px) 100vw, 300px&#34; /&gt;&lt;/figure&gt;
 &lt;/div&gt;
 &lt;h2 id=&#34;machine-info&#34;&gt;Machine Info
@@ -59,11 +59,11 @@ PORT      STATE SERVICE       REASON          VERSION
         </item>
         <item>
         <title>OSCP-PGP Readys Writeup</title>
-        <link>http://localhost:1313/oscp-pgp-readys-writeup/</link>
+        <link>https://jojobei.github.io/oscp-pgp-readys-writeup/</link>
         <pubDate>Wed, 28 May 2025 08:43:08 +0000</pubDate>
         
-        <guid>http://localhost:1313/oscp-pgp-readys-writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2025/03/1743336789-gura-150x150.jpg" alt="Featured image of post OSCP-PGP Readys Writeup" /&gt;&lt;ul class=&#34;wp-block-list&#34;&gt;
+        <guid>https://jojobei.github.io/oscp-pgp-readys-writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2025/03/1743336789-gura-150x150.jpg" alt="Featured image of post OSCP-PGP Readys Writeup" /&gt;&lt;ul class=&#34;wp-block-list&#34;&gt;
   &lt;li&gt;
     Difficulty: Linux
   &lt;/li&gt;
@@ -100,11 +100,11 @@ PORT     STATE SERVICE REASON         VERSION
         </item>
         <item>
         <title>HTB-UnderPass-Writeup</title>
-        <link>http://localhost:1313/htb-underpass-Writeup/</link>
+        <link>https://jojobei.github.io/htb-underpass-Writeup/</link>
         <pubDate>Mon, 12 May 2025 16:01:18 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-underpass-Writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" alt="Featured image of post HTB-UnderPass-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
+        <guid>https://jojobei.github.io/htb-underpass-Writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" alt="Featured image of post HTB-UnderPass-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
   &lt;figure class=&#34;aligncenter size-full&#34;&gt;&lt;img loading=&#34;lazy&#34; decoding=&#34;async&#34; width=&#34;300&#34; height=&#34;300&#34; src=&#34;../legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp&#34; alt=&#34;&#34; class=&#34;wp-image-1413&#34; srcset=&#34;../legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp 300w, ../legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44-150x150.webp 150w&#34; sizes=&#34;auto, (max-width: 300px) 100vw, 300px&#34; /&gt;&lt;/figure&gt;
 &lt;/div&gt;
 &lt;ul class=&#34;wp-block-list&#34;&gt;
@@ -134,10 +134,10 @@ PORT   STATE SERVICE REASON         VERSION
         </item>
         <item>
         <title>OSCP-PGP Clue Writeup</title>
-        <link>http://localhost:1313/oscp-pgp-clue-writeup/</link>
+        <link>https://jojobei.github.io/oscp-pgp-clue-writeup/</link>
         <pubDate>Fri, 25 Apr 2025 14:19:39 +0000</pubDate>
         
-        <guid>http://localhost:1313/oscp-pgp-clue-writeup/</guid>
+        <guid>https://jojobei.github.io/oscp-pgp-clue-writeup/</guid>
         <description>&lt;ul class=&#34;wp-block-list&#34;&gt;
   &lt;li&gt;
     Difficulty: Hard
@@ -183,11 +183,11 @@ PORT     STATE SERVICE          REASON         VERSION
         </item>
         <item>
         <title>HTB-Administrator-Writeup</title>
-        <link>http://localhost:1313/htb-administrator-Writeup/</link>
+        <link>https://jojobei.github.io/htb-administrator-Writeup/</link>
         <pubDate>Sun, 20 Apr 2025 02:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-administrator-Writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2025/04/1745035819-download-150x150.png" alt="Featured image of post HTB-Administrator-Writeup" /&gt;&lt;h2 id=&#34;nmap-result&#34;&gt;Nmap Result
+        <guid>https://jojobei.github.io/htb-administrator-Writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2025/04/1745035819-download-150x150.png" alt="Featured image of post HTB-Administrator-Writeup" /&gt;&lt;h2 id=&#34;nmap-result&#34;&gt;Nmap Result
 &lt;/h2&gt;&lt;div class=&#34;wp-block-syntaxhighlighter-code &#34;&gt;
   &lt;pre class=&#34;brush: bash; title: ; notranslate&#34; title=&#34;&#34;&gt;
 Not shown: 65509 closed tcp ports (reset)
@@ -227,11 +227,11 @@ PORT      STATE SERVICE       REASON          VERSION
         </item>
         <item>
         <title>HTB-Bashed-Writeup</title>
-        <link>http://localhost:1313/htb-bashed-Writeup/</link>
+        <link>https://jojobei.github.io/htb-bashed-Writeup/</link>
         <pubDate>Sat, 19 Apr 2025 07:25:07 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-bashed-Writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" alt="Featured image of post HTB-Bashed-Writeup" /&gt;&lt;h2 id=&#34;machine-information&#34;&gt;Machine Information
+        <guid>https://jojobei.github.io/htb-bashed-Writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" alt="Featured image of post HTB-Bashed-Writeup" /&gt;&lt;h2 id=&#34;machine-information&#34;&gt;Machine Information
 &lt;/h2&gt;&lt;ul class=&#34;wp-block-list&#34;&gt;
   &lt;li&gt;
     Difficulty: Easy
@@ -261,11 +261,11 @@ Running: Linux 3.X|4.X
         </item>
         <item>
         <title>HTB-Season 6-Monitored</title>
-        <link>http://localhost:1313/htb-season-6-monitored/</link>
+        <link>https://jojobei.github.io/htb-season-6-monitored/</link>
         <pubDate>Wed, 01 Jan 2025 08:44:04 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-season-6-monitored/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" alt="Featured image of post HTB-Season 6-Monitored" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
+        <guid>https://jojobei.github.io/htb-season-6-monitored/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" alt="Featured image of post HTB-Season 6-Monitored" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
   &lt;figure class=&#34;aligncenter size-full&#34;&gt;&lt;img loading=&#34;lazy&#34; decoding=&#34;async&#34; width=&#34;300&#34; height=&#34;300&#34; src=&#34;../wp-contnt/uploads/2024/08/1724834633-monitor.webp&#34; alt=&#34;&#34; class=&#34;wp-image-280&#34; srcset=&#34;../legacy/uploads/2024/08/1724834633-monitor.webp 300w, ../legacy/uploads/2024/08/1724834633-monitor-150x150.webp 150w&#34; sizes=&#34;auto, (max-width: 300px) 100vw, 300px&#34; /&gt;&lt;/figure&gt;
 &lt;/div&gt;
 &lt;p&gt;Medium难度，好像这个机器还有两个前身，一个Monitored，一个Monitored2. 这次图片上变成3了。&lt;/p&gt;
@@ -274,11 +274,11 @@ Running: Linux 3.X|4.X
         </item>
         <item>
         <title>HTB-Retired-Magic-Writeup</title>
-        <link>http://localhost:1313/htb-retired-magic-Writeup/</link>
+        <link>https://jojobei.github.io/htb-retired-magic-Writeup/</link>
         <pubDate>Thu, 29 Aug 2024 05:31:35 +0000</pubDate>
         
-        <guid>http://localhost:1313/htb-retired-magic-Writeup/</guid>
-        <description>&lt;img src="http://localhost:1313/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" alt="Featured image of post HTB-Retired-Magic-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
+        <guid>https://jojobei.github.io/htb-retired-magic-Writeup/</guid>
+        <description>&lt;img src="https://jojobei.github.io/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" alt="Featured image of post HTB-Retired-Magic-Writeup" /&gt;&lt;div class=&#34;wp-block-image&#34;&gt;
   &lt;figure class=&#34;aligncenter size-full&#34;&gt;&lt;img loading=&#34;lazy&#34; decoding=&#34;async&#34; width=&#34;300&#34; height=&#34;300&#34; src=&#34;../legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479.webp&#34; alt=&#34;&#34; class=&#34;wp-image-380&#34; srcset=&#34;../legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479.webp 300w, ../legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp 150w&#34; sizes=&#34;auto, (max-width: 300px) 100vw, 300px&#34; /&gt;&lt;/figure&gt;
 &lt;/div&gt;
 &lt;p&gt;Medium难度，直接扫端口。&lt;/p&gt;
@@ -302,34 +302,34 @@ Running: Linux 3.X|4.X
         </item>
         <item>
         <title>关于</title>
-        <link>http://localhost:1313/about/</link>
+        <link>https://jojobei.github.io/about/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/about/</guid>
+        <guid>https://jojobei.github.io/about/</guid>
         <description>&lt;p&gt;Hello&lt;/p&gt;</description>
         </item>
         <item>
         <title>归档</title>
-        <link>http://localhost:1313/archives/</link>
+        <link>https://jojobei.github.io/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/archives/</guid>
+        <guid>https://jojobei.github.io/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>搜索</title>
-        <link>http://localhost:1313/search/</link>
+        <link>https://jojobei.github.io/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/search/</guid>
+        <guid>https://jojobei.github.io/search/</guid>
         <description></description>
         </item>
         <item>
         <title>友链</title>
-        <link>http://localhost:1313/links/</link>
+        <link>https://jojobei.github.io/links/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/links/</guid>
+        <guid>https://jojobei.github.io/links/</guid>
         <description></description>
         </item>
         

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Difficulty: Hard Community Rate: Very Hard OS: Linux Nmap Results Not shown: 65529 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 |_http-title: 403 Forbidden | http-methods: |_ Supported Methods: OPTIONS HEAD GET POST |_http-server-header: Apache/2.4.38 (Debian) 139/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP) 445/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP) 3000/tcp open http syn-ack ttl 61 Thin httpd |_http-title: Cassandra Web |_http-server-header: thin |_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8 | http-methods: |_ Supported Methods: GET HEAD 8021/tcp open freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket Enumeration 两个HTTP服务端口，先看80：\n">
 <title>OSCP-PGP Clue Writeup</title>
 
-<link rel='canonical' href='http://localhost:1313/oscp-pgp-clue-writeup/'>
+<link rel='canonical' href='https://jojobei.github.io/oscp-pgp-clue-writeup/'>
 
 <link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="OSCP-PGP Clue Writeup">
 <meta property='og:description' content=" Difficulty: Hard Community Rate: Very Hard OS: Linux Nmap Results Not shown: 65529 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 |_http-title: 403 Forbidden | http-methods: |_ Supported Methods: OPTIONS HEAD GET POST |_http-server-header: Apache/2.4.38 (Debian) 139/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP) 445/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP) 3000/tcp open http syn-ack ttl 61 Thin httpd |_http-title: Cassandra Web |_http-server-header: thin |_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8 | http-methods: |_ Supported Methods: GET HEAD 8021/tcp open freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket Enumeration 两个HTTP服务端口，先看80：\n">
-<meta property='og:url' content='http://localhost:1313/oscp-pgp-clue-writeup/'>
+<meta property='og:url' content='https://jojobei.github.io/oscp-pgp-clue-writeup/'>
 <meta property='og:site_name' content='JoWhite'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-25T14:19:39&#43;00:00'/><meta property='article:modified_time' content='2025-04-25T14:19:39&#43;00:00'/>
 <meta name="twitter:title" content="OSCP-PGP Clue Writeup">
@@ -212,9 +212,9 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="http://localhost:1313/" >中文</option>
+                                    <option value="https://jojobei.github.io/" >中文</option>
                                 
-                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                    <option value="https://jojobei.github.io/en/" selected>English</option>
                                 
                             </select>
                         </li>
@@ -346,7 +346,7 @@
 
             <div>
                 
-                    <a href="http://localhost:1313/oscp-pgp-clue-writeup/" class="link">中文</a>
+                    <a href="https://jojobei.github.io/oscp-pgp-clue-writeup/" class="link">中文</a>
                 
             </div>
         </footer>
@@ -1046,7 +1046,7 @@ pkts bytes target     prot opt in     out     source               destination  
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.1e9a3bafd846ced4c345d084b355fb8c7bae75701c338f8a1f8a82c780137826.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
