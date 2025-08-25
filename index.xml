@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Posts on JoWhite</title>
-        <link>http://localhost:1313/en/post/</link>
-        <description>Recent content in Posts on JoWhite</description>
+        <title>JoWhite</title>
+        <link>http://localhost:1313/</link>
+        <description>Recent content on JoWhite</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
+        <language>zh-cn</language>
         <copyright>Jowhite</copyright>
-        <lastBuildDate>Fri, 30 May 2025 13:46:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/en/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 30 May 2025 13:46:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>HTB-Flight-Writeup</title>
         <link>http://localhost:1313/htb-flight-Writeup/</link>
         <pubDate>Fri, 30 May 2025 13:46:56 +0000</pubDate>
@@ -299,6 +299,38 @@ Running: Linux 3.X|4.X
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h2 id=&#34;port-80-wp-block-heading&#34;&gt;Port 80 {.wp-block-heading}&lt;figure class=&#34;wp-block-image size-large&#34;&gt;
 &lt;/h2&gt;&lt;p&gt;&lt;img loading=&#34;lazy&#34; decoding=&#34;async&#34; width=&#34;1024&#34; height=&#34;499&#34; src=&#34;../legacy/uploads/2024/08/1724907496-image-1024x499.png&#34; alt=&#34;&#34; class=&#34;wp-image-383&#34; srcset=&#34;../legacy/uploads/2024/08/1724907496-image-1024x499.png 1024w, ../legacy/uploads/2024/08/1724907496-image-300x146.png 300w, ../legacy/uploads/2024/08/1724907496-image-768x374.png 768w, ../legacy/uploads/2024/08/1724907496-image-1536x748.png 1536w, ../legacy/uploads/2024/08/1724907496-image.png 1873w&#34; sizes=&#34;auto, (max-width: 1024px) 100vw, 1024px&#34; /&gt; &lt;/figure&gt;&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>关于</title>
+        <link>http://localhost:1313/about/</link>
+        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/about/</guid>
+        <description>&lt;p&gt;Hello&lt;/p&gt;</description>
+        </item>
+        <item>
+        <title>归档</title>
+        <link>http://localhost:1313/archives/</link>
+        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/archives/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>搜索</title>
+        <link>http://localhost:1313/search/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/search/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>友链</title>
+        <link>http://localhost:1313/links/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/links/</guid>
+        <description></description>
         </item>
         
     </channel>
